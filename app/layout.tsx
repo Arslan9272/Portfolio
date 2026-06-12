@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, Inter } from "next/font/google";
+import { SmoothScroll } from "@/components/fx/SmoothScroll";
+import { CursorGlow } from "@/components/fx/CursorGlow";
 import "./globals.css";
 
 const sora = Sora({
@@ -32,7 +34,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">
-        {children}
+        <SmoothScroll>
+          <CursorGlow />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
