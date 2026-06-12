@@ -19,7 +19,7 @@ export type SkillGroup = { label: string; skills: string[] };
 export const site = {
   name: "Arslan",
   role: "Full Stack Developer",
-  eyebrow: "FULL STACK DEVELOPER · AI / ML / CV",
+  eyebrow: "Full Stack Developer · AI / ML / CV",
   tagline: "I build intelligent products — from pixel to model.",
   about: [
     "I'm a full-stack developer who works across the entire product surface — React, TypeScript, and Next.js on the front, Python (FastAPI, Django) and Node.js on the back. I care about interfaces that feel fast and deliberate, and about the APIs and data models that keep them honest.",
@@ -131,3 +131,5 @@ export const site = {
     },
   ] satisfies ExperienceEntry[],
 };
+
+export type Site = typeof site;
