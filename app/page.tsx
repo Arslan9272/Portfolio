@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/fx/Reveal";
 import { MagneticButton } from "@/components/fx/MagneticButton";
+import { ChromeBlob } from "@/components/fx/ChromeBlob";
 
 /**
  * Temporary demo page exercising the FX primitives.
@@ -11,8 +12,9 @@ export default function Home() {
     <main className="relative">
       <section
         id="top"
-        className="flex min-h-screen flex-col items-center justify-center gap-8 px-6"
+        className="relative flex min-h-screen flex-col items-center justify-center gap-8 overflow-hidden px-6"
       >
+        <ChromeBlob className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 opacity-80" />
         <Reveal>
           <p className="eyebrow text-center">FX primitives demo</p>
         </Reveal>
