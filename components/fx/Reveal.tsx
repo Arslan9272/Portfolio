@@ -1,11 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 /**
  * Scroll-reveal wrapper used by every section.
  * Fades in and rises 24px once the element enters the viewport.
- * Renders static (no offset, no animation) for prefers-reduced-motion.
+ * Reduced-motion handling comes from the app-level
+ * <MotionConfig reducedMotion="user"> (see SmoothScroll.tsx): framer-motion
+ * drops the transform animation but keeps the opacity fade, and the markup
+ * stays identical on server and client so hydration never mismatches.
  */
 export function Reveal({
   children,
@@ -16,12 +19,6 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reducedMotion = useReducedMotion();
-
-  if (reducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       className={className}

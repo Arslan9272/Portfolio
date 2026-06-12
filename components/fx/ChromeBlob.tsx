@@ -50,9 +50,19 @@ function supportsWebGL() {
   if (webglSupport === null) {
     try {
       const canvas = document.createElement("canvas");
-      webglSupport = Boolean(
-        canvas.getContext("webgl2") ?? canvas.getContext("webgl")
-      );
+      // failIfMajorPerformanceCaveat: software-rendered WebGL (e.g.
+      // SwiftShader) returns null here, so those clients keep the CSS orb.
+      const attributes: WebGLContextAttributes = {
+        failIfMajorPerformanceCaveat: true,
+      };
+      const gl = (canvas.getContext("webgl2", attributes) ??
+        canvas.getContext("webgl", attributes)) as
+        | WebGLRenderingContext
+        | WebGL2RenderingContext
+        | null;
+      webglSupport = Boolean(gl);
+      // Release the probe context immediately instead of waiting for GC.
+      gl?.getExtension("WEBGL_lose_context")?.loseContext();
     } catch {
       webglSupport = false;
     }

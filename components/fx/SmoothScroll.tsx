@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { MotionConfig } from "framer-motion";
 import Lenis from "lenis";
 
 /**
@@ -10,6 +11,9 @@ import Lenis from "lenis";
  *   to them via lenis.scrollTo (CSS scroll-behavior was intentionally
  *   removed from globals.css — Lenis owns smooth scrolling).
  * - Skipped entirely under prefers-reduced-motion: native scrolling stays.
+ * - Also hosts the app-wide <MotionConfig reducedMotion="user">, which makes
+ *   every framer-motion component drop transform animations (keeping
+ *   opacity) for reduced-motion users — hydration-safe, no manual branching.
  */
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -37,5 +41,5 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
-  return <>{children}</>;
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }

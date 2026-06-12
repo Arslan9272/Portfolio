@@ -17,21 +17,40 @@ function clamp(value: number, limit: number) {
 }
 
 /**
- * Children translate toward the cursor while it hovers, then spring back
- * on leave. Renders an <a> when href is given, a <button> otherwise.
- * Disabled entirely under prefers-reduced-motion.
+ * Props framer-motion redefines with incompatible signatures on motion
+ * elements — stripped from the native prop sets before spreading.
  */
-export function MagneticButton({
-  children,
-  className,
-  href,
-  onClick,
-}: {
+type MotionConflicts =
+  | "onDrag"
+  | "onDragStart"
+  | "onDragEnd"
+  | "onAnimationStart"
+  | "style"
+  | "children";
+
+type AnchorVariant = { href: string } & Omit<
+  React.ComponentPropsWithoutRef<"a">,
+  "href" | MotionConflicts
+>;
+
+type ButtonVariant = { href?: undefined } & Omit<
+  React.ComponentPropsWithoutRef<"button">,
+  MotionConflicts
+>;
+
+type MagneticButtonProps = (AnchorVariant | ButtonVariant) & {
   children: React.ReactNode;
   className?: string;
-  href?: string;
-  onClick?: () => void;
-}) {
+};
+
+/**
+ * Children translate toward the cursor while it hovers, then spring back
+ * on leave. Renders an <a> when href is given, a <button> otherwise, and
+ * forwards all remaining native props (target, rel, aria-*, type,
+ * disabled, …) to the underlying element.
+ * Disabled entirely under prefers-reduced-motion.
+ */
+export function MagneticButton(props: MagneticButtonProps) {
   const ref = useRef<HTMLElement | null>(null);
   const reducedMotion = useReducedMotion();
 
@@ -56,18 +75,17 @@ export function MagneticButton({
   };
 
   const motionProps = {
-    className,
     style: { x, y },
     onPointerMove: handlePointerMove,
     onPointerLeave: handlePointerLeave,
   };
 
-  if (href) {
+  if (props.href !== undefined) {
+    const { children, ...rest } = props;
     return (
       <motion.a
         ref={ref as React.Ref<HTMLAnchorElement>}
-        href={href}
-        onClick={onClick}
+        {...rest}
         {...motionProps}
       >
         {children}
@@ -75,11 +93,15 @@ export function MagneticButton({
     );
   }
 
+  // href is always undefined in this branch; pull it out so it is not
+  // spread onto the <button>.
+  const { children, href: _href, type, ...rest } = props;
+  void _href;
   return (
     <motion.button
       ref={ref as React.Ref<HTMLButtonElement>}
-      type="button"
-      onClick={onClick}
+      type={type ?? "button"}
+      {...rest}
       {...motionProps}
     >
       {children}
