@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import { Reveal } from "@/components/fx/Reveal";
+import { MetaRail } from "@/components/fx/MetaRail";
 import { SectionHeader } from "./SectionHeader";
 
 /**
@@ -11,7 +12,8 @@ export function About() {
 
   return (
     <section id="about" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <MetaRail index="01" label="About" />
         <SectionHeader id="about-heading" index="01" label="About" />
 
         <Reveal delay={0.1}>

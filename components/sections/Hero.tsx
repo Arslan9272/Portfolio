@@ -39,8 +39,14 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_-12%,rgba(220,225,235,0.09),transparent_70%)]"
       />
 
+      {/* Bloom halo behind the blob so its off-edge bleed reads intentional */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-14 hidden h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(190,200,220,0.14),transparent_65%)] md:left-auto md:right-[-12%] md:top-1/2 md:block md:h-[min(64vw,52rem)] md:w-[min(64vw,52rem)] md:-translate-y-1/2 lg:right-[-8%] xl:right-[-4%]"
+      />
+
       {/* Chrome blob — right side on md+, dimmed backdrop on mobile */}
-      <ChromeBlob className="pointer-events-none absolute left-1/2 top-14 h-72 w-72 -translate-x-1/2 opacity-40 md:left-auto md:right-[-6%] md:top-1/2 md:h-[min(46vw,38rem)] md:w-[min(46vw,38rem)] md:translate-x-0 md:-translate-y-1/2 md:opacity-100 lg:right-[-2%] xl:right-[2%]" />
+      <ChromeBlob className="pointer-events-none absolute left-1/2 top-14 z-[1] h-72 w-72 -translate-x-1/2 opacity-40 md:left-auto md:right-[-2%] md:top-1/2 md:h-[min(44vw,36rem)] md:w-[min(44vw,36rem)] md:translate-x-0 md:-translate-y-1/2 md:opacity-100 lg:right-[2%] xl:right-[5%]" />
 
       {/* Mobile readability scrim under the copy */}
       <div
@@ -54,13 +60,16 @@ export function Hero() {
         animate="visible"
         className="relative z-10 mx-auto w-full max-w-6xl px-6"
       >
-        <motion.p variants={item} className="eyebrow mb-6">
+        <motion.p
+          variants={item}
+          className="eyebrow mb-6 max-w-xs text-pretty tracking-[0.22em] sm:max-w-none md:tracking-[0.3em]"
+        >
           {site.eyebrow}
         </motion.p>
 
         <motion.h1
           variants={item}
-          className="chrome-text-animated font-display text-[clamp(3.75rem,14vw,8rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.03em]"
+          className="chrome-text-animated chrome-h1-light font-display text-[clamp(3.75rem,14vw,8rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.03em]"
         >
           {site.name}
         </motion.h1>

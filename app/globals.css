@@ -10,12 +10,14 @@
   --glass-border: rgba(255, 255, 255, 0.13);
   --glass-fill-hover: rgba(255, 255, 255, 0.09);
   --chrome-gradient: linear-gradient(
-    110deg,
-    #fff 15%,
-    #9a9a9a 35%,
-    #fff 55%,
-    #6b6b6b 75%,
-    #fff 95%
+    150deg,
+    #ffffff 0%,
+    #d3d6dd 18%,
+    #8b8e98 34%,
+    #f4f5f8 50%,
+    #71747e 64%,
+    #c9ccd4 80%,
+    #ffffff 100%
   );
   --glow: rgba(220, 225, 235, 0.16);
 }
@@ -51,6 +53,19 @@ body {
   border-radius: 1rem;
 }
 
+/* Frosted glass with real depth: inset top light + ambient drop shadow.
+   Use for content cards (Skills / Projects / Experience), NOT the Nav. */
+@utility glass-card {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
 @utility chrome-text {
   background-image: var(--chrome-gradient);
   -webkit-background-clip: text;
@@ -65,6 +80,15 @@ body {
   background-clip: text;
   color: transparent;
   animation: chrome-shimmer 6s linear infinite;
+}
+
+/* Hero H1: layer a thin top inner light over the chrome so the type
+   catches light like the blob. Pairs with chrome-text-animated. */
+@utility chrome-h1-light {
+  -webkit-filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
+    drop-shadow(0 2px 12px rgba(220, 225, 235, 0.14));
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
+    drop-shadow(0 2px 12px rgba(220, 225, 235, 0.14));
 }
 
 @keyframes chrome-shimmer {

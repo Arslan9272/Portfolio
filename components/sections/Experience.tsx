@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { site } from "@/content/site";
 import { Reveal } from "@/components/fx/Reveal";
+import { MetaRail } from "@/components/fx/MetaRail";
 import { SectionHeader } from "./SectionHeader";
 
 /**
@@ -25,7 +26,8 @@ export function Experience() {
 
   return (
     <section id="experience" aria-labelledby="experience-heading">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <MetaRail index="04" label="Experience" />
         <SectionHeader id="experience-heading" index="04" label="Experience" />
 
         <div ref={timelineRef} className="relative max-w-3xl">
@@ -51,7 +53,7 @@ export function Experience() {
                 />
 
                 <Reveal delay={index * 0.05}>
-                  <article className="glass p-6 transition-[border-color,background-color] duration-300 hover:border-white/25 hover:bg-[var(--glass-fill-hover)] md:p-7">
+                  <article className="glass-card p-6 transition-[border-color,background-color] duration-300 hover:border-white/25 hover:bg-[var(--glass-fill-hover)] md:p-7">
                     <p className="font-mono text-xs tracking-[0.2em] text-[var(--fg-faint)]">
                       {entry.period}
                     </p>

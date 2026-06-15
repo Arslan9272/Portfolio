@@ -49,7 +49,7 @@ export function Skills() {
               variants={card}
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 320, damping: 24 }}
-              className="glass p-6 transition-[border-color,background-color,box-shadow] duration-300 hover:border-white/25 hover:bg-[var(--glass-fill-hover)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.4),0_0_32px_var(--glow)] md:p-7"
+              className="glass-card p-6 transition-[border-color,background-color,box-shadow] duration-300 hover:border-white/25 hover:bg-[var(--glass-fill-hover)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_28px_70px_-18px_rgba(0,0,0,0.75),0_0_32px_var(--glow)] md:p-7"
             >
               <header className="flex items-baseline justify-between gap-4">
                 <h3 className="font-display text-lg font-semibold tracking-tight">

@@ -63,9 +63,9 @@ export function Projects() {
             <motion.article
               key={project.title}
               variants={card}
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 300, damping: 26 }}
-              className="glass group relative flex flex-col overflow-hidden transition-[border-color,box-shadow] duration-300 hover:border-white/25 hover:shadow-[0_20px_56px_rgba(0,0,0,0.45),0_0_36px_var(--glow)]"
+              className="glass-card group relative flex flex-col overflow-hidden transition-[border-color,box-shadow] duration-300 hover:border-white/35 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.16),0_30px_72px_-18px_rgba(0,0,0,0.78),0_0_40px_var(--glow)]"
             >
               {/* Sheen sweep on hover */}
               <div
@@ -76,7 +76,7 @@ export function Projects() {
               {/* Art header — pure CSS gradients */}
               <div
                 aria-hidden
-                className="relative h-40 md:h-44"
+                className="relative h-40 brightness-100 saturate-100 transition-[filter] duration-300 ease-out group-hover:brightness-[1.15] group-hover:saturate-150 md:h-44"
                 style={{ background: project.accent ?? FALLBACK_ACCENT }}
               >
                 {/* fine diagonal texture */}
@@ -87,21 +87,28 @@ export function Projects() {
                 <span className="absolute left-6 top-5 font-mono text-[0.6875rem] tracking-[0.25em] text-white/35">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                {/* chrome orb accent */}
+                {/* chrome orb accent — smaller, tinted by the card's accent
+                    so it complements rather than competes with the hero blob */}
                 <div
-                  className="absolute bottom-5 right-6 h-14 w-14 rounded-full transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-110"
+                  className="absolute bottom-5 right-6 h-10 w-10 rounded-full opacity-90 transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-110"
                   style={{
                     background:
-                      "radial-gradient(circle at 32% 30%, #f8f9fb 0%, #c9cdd5 22%, #82858d 48%, #3a3c42 72%, #101113 100%)",
+                      "radial-gradient(circle at 32% 30%, rgba(255,255,255,0.95) 0%, #c9cdd5 24%, #82858d 52%, #2c2e33 78%, #0d0e10 100%)",
                     boxShadow:
-                      "0 10px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(220, 225, 235, 0.16)",
+                      "0 8px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(220, 225, 235, 0.14)",
                   }}
-                />
+                >
+                  {/* accent tint pulled from the card's gradient header */}
+                  <div
+                    className="absolute inset-0 rounded-full mix-blend-overlay opacity-70"
+                    style={{ background: project.accent ?? FALLBACK_ACCENT }}
+                  />
+                </div>
               </div>
 
               {/* Body */}
               <div className="flex flex-1 flex-col p-6 md:p-7">
-                <h3 className="font-display text-xl font-semibold tracking-tight md:text-2xl">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-white md:text-2xl">
                   {project.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-[1.75] text-[var(--fg-muted)]">
