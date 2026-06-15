@@ -15,7 +15,7 @@ export function Experience() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ["start 0.75", "end 0.55"],
+    offset: ["start 0.75", "end 0.7"],
   });
   const lineScale = useSpring(scrollYProgress, {
     stiffness: 90,

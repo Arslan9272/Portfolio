@@ -24,7 +24,7 @@ export function Contact() {
             href={`mailto:${site.email}`}
             className="group relative mt-10 inline-flex max-w-full items-baseline gap-3 py-2 font-display text-xl font-light tracking-tight text-[var(--fg)] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-white/25 after:transition-[background-color] after:duration-300 hover:after:bg-white/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70 sm:text-2xl md:mt-12 md:text-4xl"
           >
-            <span className="break-all">{site.email}</span>
+            <span className="[overflow-wrap:anywhere]">{site.email}</span>
             <span
               aria-hidden
               className="text-[0.6em] text-[var(--fg-muted)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
