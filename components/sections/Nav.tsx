@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   AnimatePresence,
@@ -14,6 +15,7 @@ const LINKS = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
+  { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -82,9 +84,19 @@ export function Nav() {
         >
           <a
             href="#top"
-            className="chrome-text font-display text-sm font-bold tracking-[0.32em] uppercase focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+            aria-label={`${site.fullName} — back to top`}
+            className="group flex items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
           >
-            {site.name}
+            <Image
+              src="/arslan-avatar.jpg"
+              alt=""
+              width={128}
+              height={128}
+              className="h-9 w-9 rounded-full object-cover ring-1 ring-[var(--glass-border)] transition-[box-shadow,transform] duration-300 group-hover:scale-[1.04] group-hover:ring-white/40"
+            />
+            <span className="chrome-text font-display text-sm font-bold uppercase tracking-[0.32em]">
+              {site.name}
+            </span>
           </a>
 
           {/* Desktop links */}

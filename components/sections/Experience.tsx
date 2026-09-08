@@ -63,11 +63,18 @@ export function Experience() {
                         @ {entry.org}
                       </span>
                     </h3>
-                    <p className="mt-3 text-sm leading-[1.75] text-[var(--fg-muted)]">
-                      {entry.summary}
-                    </p>
+                    {entry.location && (
+                      <p className="mt-2 text-xs uppercase tracking-[0.18em] text-[var(--fg-faint)]">
+                        {entry.location}
+                      </p>
+                    )}
+                    {entry.summary && (
+                      <p className="mt-3 text-sm leading-[1.75] text-[var(--fg-muted)]">
+                        {entry.summary}
+                      </p>
+                    )}
                     {entry.highlights.length > 0 && (
-                      <ul className="mt-5 space-y-2.5 border-t border-[var(--glass-border)] pt-5">
+                      <ul className="mt-5 space-y-3 border-t border-[var(--glass-border)] pt-5">
                         {entry.highlights.map((highlight) => (
                           <li
                             key={highlight}

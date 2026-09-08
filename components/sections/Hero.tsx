@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { site } from "@/content/site";
-import { ChromeBlob } from "@/components/fx/ChromeBlob";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -22,16 +22,16 @@ const item = {
 };
 
 /**
- * Full-viewport chrome hero: liquid-metal blob on the right (dimmed and
- * tucked behind the copy on mobile), shimmering chrome name, tagline,
- * and the two primary CTAs — all staggered in on load.
+ * Full-viewport chrome hero: a neural-network filament field washing in from
+ * the right, shimmering chrome name, tagline, and the two primary CTAs —
+ * all staggered in on load.
  */
 export function Hero() {
   return (
     <section
       id="top"
       aria-label="Intro"
-      className="relative flex min-h-screen items-center overflow-hidden"
+      className="relative flex min-h-screen items-center overflow-hidden py-28 md:py-32"
     >
       {/* Atmosphere: faint top spotlight */}
       <div
@@ -39,14 +39,24 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_-12%,rgba(220,225,235,0.09),transparent_70%)]"
       />
 
-      {/* Bloom halo behind the blob so its off-edge bleed reads intentional */}
+      {/* Bloom under the densest part of the network so it reads as lit, not pasted */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-14 hidden h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(190,200,220,0.14),transparent_65%)] md:left-auto md:right-[-12%] md:top-1/2 md:block md:h-[min(64vw,52rem)] md:w-[min(64vw,52rem)] md:-translate-y-1/2 lg:right-[-8%] xl:right-[-4%]"
+        className="pointer-events-none absolute right-[-14%] top-1/2 h-[min(70vw,54rem)] w-[min(70vw,54rem)] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(190,200,220,0.10),transparent_66%)]"
       />
 
-      {/* Chrome blob — right side on md+, dimmed backdrop on mobile */}
-      <ChromeBlob className="pointer-events-none absolute left-1/2 top-14 z-[1] h-72 w-72 -translate-x-1/2 opacity-40 md:left-auto md:right-[-2%] md:top-1/2 md:h-[min(44vw,36rem)] md:w-[min(44vw,36rem)] md:translate-x-0 md:-translate-y-1/2 md:opacity-100 lg:right-[2%] xl:right-[5%]" />
+      {/* Neural-network filament field, masked so it fades out behind the copy */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 z-[1]">
+        <Image
+          src="/hero-network.png"
+          alt=""
+          fill
+          loading="eager"
+          fetchPriority="high"
+          sizes="100vw"
+          className="object-cover opacity-30 [-webkit-mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] [mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] md:opacity-45"
+        />
+      </div>
 
       {/* Mobile readability scrim under the copy */}
       <div
@@ -60,25 +70,27 @@ export function Hero() {
         animate="visible"
         className="relative z-10 mx-auto w-full max-w-6xl px-6"
       >
-        <motion.p
-          variants={item}
-          className="eyebrow mb-6 max-w-xs text-pretty tracking-[0.22em] sm:max-w-none md:tracking-[0.3em]"
-        >
-          {site.eyebrow}
-        </motion.p>
-
-        <motion.h1
-          variants={item}
-          className="chrome-text-animated chrome-h1-light font-display text-[clamp(3.75rem,14vw,8rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.03em]"
-        >
-          {site.name}
+        <motion.h1 variants={item} className="font-display">
+          <span className="mb-6 block text-pretty text-xs font-medium uppercase tracking-[0.24em] text-[var(--fg-muted)] sm:text-sm sm:tracking-[0.34em]">
+            {site.fullName}
+          </span>
+          <span className="chrome-text-animated chrome-h1-light block max-w-4xl text-[clamp(2.5rem,7vw,5rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.025em]">
+            {site.role}
+          </span>
         </motion.h1>
 
         <motion.p
           variants={item}
-          className="mt-7 max-w-xl text-lg leading-relaxed text-[var(--fg-muted)] md:text-xl"
+          className="mt-8 max-w-2xl font-display text-xl font-light leading-[1.35] tracking-tight text-[var(--fg)] md:text-[1.75rem]"
         >
           {site.tagline}
+        </motion.p>
+
+        <motion.p
+          variants={item}
+          className="mt-6 max-w-xl text-[0.9375rem] leading-[1.8] text-[var(--fg-muted)] md:text-base"
+        >
+          {site.intro}
         </motion.p>
 
         <motion.div
@@ -98,6 +110,26 @@ export function Hero() {
             Contact
           </MagneticButton>
         </motion.div>
+
+        {/* Stat strip — the quick-scan facts a recruiter looks for first */}
+        <motion.dl
+          variants={item}
+          className="mt-12 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--glass-border)] pt-8 sm:grid-cols-4 md:mt-14"
+        >
+          {site.stats.map((stat) => (
+            <div key={stat.label}>
+              <dt className="sr-only">{stat.label}</dt>
+              <dd>
+                <span className="block font-display text-2xl font-semibold tracking-tight text-[var(--fg)] md:text-[1.75rem]">
+                  {stat.value}
+                </span>
+                <span className="mt-1.5 block text-[0.6875rem] uppercase tracking-[0.18em] text-[var(--fg-faint)]">
+                  {stat.label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </motion.dl>
       </motion.div>
 
       {/* Scroll indicator */}

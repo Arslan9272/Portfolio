@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Sora, Inter } from "next/font/google";
 import { SmoothScroll } from "@/components/fx/SmoothScroll";
-import { CursorGlow } from "@/components/fx/CursorGlow";
 import "./globals.css";
 
 const sora = Sora({
@@ -14,14 +13,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const TITLE = "Muhammad Arslan Tabish — Full Stack AI Engineer";
+const DESCRIPTION =
+  "Full Stack AI Engineer in Lahore building LLM products end to end — Python/FastAPI services and data models through to React 19 and TypeScript interfaces.";
+
 export const metadata: Metadata = {
-  title: "Arslan — Full Stack Developer",
-  description:
-    "Full-stack developer building with React, Next.js, and Python — and shipping AI/ML and computer-vision systems to production.",
+  title: TITLE,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Arslan — Full Stack Developer",
-    description:
-      "Full-stack developer building with React, Next.js, and Python — and shipping AI/ML and computer-vision systems to production.",
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
   },
 };
@@ -35,7 +36,6 @@ export default function RootLayout({
     <html lang="en" className={`${sora.variable} ${inter.variable}`}>
       <body className="min-h-screen antialiased">
         <SmoothScroll>
-          <CursorGlow />
           {children}
         </SmoothScroll>
       </body>

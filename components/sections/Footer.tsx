@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="border-t border-[var(--glass-border)]">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
         <p className="text-xs text-[var(--fg-faint)]">
-          © {new Date().getFullYear()} {site.name}
+          © {new Date().getFullYear()} {site.fullName}
         </p>
         <a
           href="#top"
