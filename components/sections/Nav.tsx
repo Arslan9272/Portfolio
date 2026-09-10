@@ -10,7 +10,11 @@ import {
 } from "framer-motion";
 import { site } from "@/content/site";
 import { ThemeToggle } from "@/components/fx/ThemeToggle";
-import { DownloadIcon, GitHubIcon, LinkedInIcon } from "@/components/fx/Icons";
+import {
+  ArrowUpRightIcon,
+  GitHubIcon,
+  LinkedInIcon,
+} from "@/components/fx/Icons";
 
 const LINKS = [
   { label: "Skills", href: "#skills" },
@@ -120,10 +124,11 @@ export function Nav() {
 
             <a
               href={site.resumeUrl}
-              download
+              target="_blank"
+              rel="noopener noreferrer"
               className="glass hidden h-10 items-center gap-2 rounded-full px-5 text-[0.8125rem] font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:inline-flex"
             >
-              <DownloadIcon className="h-3.5 w-3.5" />
+              <ArrowUpRightIcon className="h-3.5 w-3.5" />
               Resume
             </a>
 
@@ -202,11 +207,12 @@ export function Nav() {
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href={site.resumeUrl}
-                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
                   className="glass inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-medium text-[var(--fg)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
                 >
-                  <DownloadIcon className="h-4 w-4" />
+                  <ArrowUpRightIcon className="h-4 w-4" />
                   Resume
                 </a>
                 <a

@@ -5,7 +5,6 @@ import { SectionHeader } from "./SectionHeader";
 import { ContactForm } from "./ContactForm";
 import {
   ArrowUpRightIcon,
-  DownloadIcon,
   GitHubIcon,
   LinkedInIcon,
   MailIcon,
@@ -70,8 +69,13 @@ export function Contact({ index = "06" }: { index?: string }) {
                   <LinkedInIcon />
                   LinkedIn
                 </MagneticButton>
-                <MagneticButton href={site.resumeUrl} className={socialPill}>
-                  <DownloadIcon />
+                <MagneticButton
+                  href={site.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialPill}
+                >
+                  <ArrowUpRightIcon className="h-4 w-4" />
                   Resume
                 </MagneticButton>
               </div>
