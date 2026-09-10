@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- AT monogram. Letterforms are polygons, not type: a favicon cannot rely
+       on a webfont being present, so text would render differently per browser. -->
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#aab0bc"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0a0a0c"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="13.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  <!-- A: silhouette, less the counter and the gap between the legs -->
+  <path fill="url(#chrome)" fill-rule="evenodd"
+        d="M20,15 L33.5,49 L6.5,49 Z
+           M20,26.5 L24.6,36.5 L15.4,36.5 Z
+           M14.6,42.5 L25.4,42.5 L28,49 L12,49 Z"/>
+  <!-- T: bar over stem -->
+  <rect x="36" y="15" width="22" height="7.5" fill="url(#chrome)"/>
+  <rect x="43.4" y="22.5" width="7.2" height="26.5" fill="url(#chrome)"/>
+</svg>
