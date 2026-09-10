@@ -8,7 +8,7 @@ import { MetaRail } from "@/components/fx/MetaRail";
 import { SectionHeader } from "./SectionHeader";
 
 /**
- * Experience — vertical timeline. A silver progress line grows with
+ * Experience, vertical timeline. A silver progress line grows with
  * scroll over the muted track; each entry is a glass card anchored by
  * a dot marker.
  */

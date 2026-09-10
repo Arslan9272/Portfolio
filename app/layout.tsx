@@ -13,9 +13,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const TITLE = "Muhammad Arslan Tabish — Full Stack AI Engineer";
+const TITLE = "Muhammad Arslan Tabish | Full Stack AI Engineer";
 const DESCRIPTION =
-  "Full Stack AI Engineer in Lahore building LLM products end to end — Python/FastAPI services and data models through to React 19 and TypeScript interfaces.";
+  "Full Stack AI Engineer in Lahore. I build LLM products end to end, from Python and FastAPI services and data models through to React 19 and TypeScript interfaces.";
 
 const SITE_URL = "https://arslantabish.com";
 

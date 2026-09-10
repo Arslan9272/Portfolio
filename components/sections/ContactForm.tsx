@@ -13,7 +13,7 @@ const labelClass =
   "block text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]";
 
 /**
- * Get in touch — posts to /api/contact, which relays through Resend. Sending
+ * Get in touch, posts to /api/contact, which relays through Resend. Sending
  * happens entirely in the background; the visitor's mail client is never
  * opened. Failures surface in place, with the address as a fallback.
  */
@@ -49,7 +49,7 @@ export function ContactForm() {
       if (result.error === "not_configured") {
         setStatus("error");
         setError(
-          `The form isn't hooked up yet — reach me at ${site.email} in the meantime.`,
+          `The form isn't hooked up yet. You can reach me at ${site.email} in the meantime.`,
         );
         return;
       }
@@ -63,7 +63,7 @@ export function ContactForm() {
     } catch {
       setStatus("error");
       setError(
-        "That didn't send — check your connection, or email me directly.",
+        "That didn't send. Check your connection, or just email me directly.",
       );
     }
   }
@@ -92,7 +92,7 @@ export function ContactForm() {
             required
             maxLength={120}
             autoComplete="name"
-            placeholder="Jane Doe"
+            placeholder="Arslan Tabish"
             className={`mt-2.5 ${fieldClass}`}
           />
         </div>
@@ -107,7 +107,7 @@ export function ContactForm() {
             required
             maxLength={200}
             autoComplete="email"
-            placeholder="jane@company.com"
+            placeholder="you@company.com"
             className={`mt-2.5 ${fieldClass}`}
           />
         </div>
@@ -115,7 +115,7 @@ export function ContactForm() {
 
       <div className="mt-5 md:mt-6">
         <label htmlFor="cf-message" className={labelClass}>
-          What are you working on?
+          Your message
         </label>
         <textarea
           id="cf-message"
@@ -123,7 +123,7 @@ export function ContactForm() {
           required
           rows={5}
           maxLength={5000}
-          placeholder="A line or two about the role or the project."
+          placeholder="A line or two about what you have in mind."
           className={`mt-2.5 resize-y ${fieldClass}`}
         />
       </div>
@@ -147,7 +147,7 @@ export function ContactForm() {
               role="status"
               className="text-sm text-[var(--fg)]"
             >
-              Thanks — that reached me. I&rsquo;ll reply soon.
+              Thanks, that reached me. I&rsquo;ll reply back soon.
             </motion.p>
           )}
           {status === "error" && (

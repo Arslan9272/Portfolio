@@ -9,7 +9,7 @@ import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
 /**
- * Section order leads with evidence — the work, then where it was done, then
+ * Section order leads with evidence, the work, then where it was done, then
  * the toolkit and credentials. About sits second-to-last, once the reader has
  * already seen what the claims are backed by, and Contact closes.
  */

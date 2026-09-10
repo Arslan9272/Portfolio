@@ -8,7 +8,7 @@ type Theme = "dark" | "light";
 
 export const THEME_STORAGE_KEY = "portfolio-theme";
 
-/* The <html> attribute is the source of truth — the inline script in
+/* The <html> attribute is the source of truth, the inline script in
    app/layout.tsx has already set it from localStorage before first paint.
    useSyncExternalStore reads it without an effect, so there is no cascading
    render and no flash of the wrong icon. */
@@ -43,7 +43,7 @@ function applyTheme(theme: Theme) {
 }
 
 /**
- * Dark/light switch. Dark is the default — the palette lives on bare :root,
+ * Dark/light switch. Dark is the default, the palette lives on bare :root,
  * and light is opt-in via [data-theme="light"].
  */
 export function ThemeToggle({ className = "" }: { className?: string }) {
@@ -55,7 +55,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {
-      // Private mode or blocked storage — the choice just won't persist.
+      // Private mode or blocked storage, the choice just won't persist.
     }
   }, []);
 

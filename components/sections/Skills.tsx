@@ -27,7 +27,7 @@ const chip = {
 } as const;
 
 /**
- * Skills — three frosted-glass group cards, each holding a staggered
+ * Skills, three frosted-glass group cards, each holding a staggered
  * cloud of glass chips. Cards lift slightly and brighten on hover.
  */
 export function Skills({ index = "01" }: { index?: string }) {

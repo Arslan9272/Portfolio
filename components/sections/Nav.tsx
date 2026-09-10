@@ -90,7 +90,7 @@ export function Nav() {
         >
           <a
             href="#top"
-            aria-label={`${site.fullName} — back to top`}
+            aria-label={`${site.fullName}, back to top`}
             className="group flex shrink-0 items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
           >
             <Image

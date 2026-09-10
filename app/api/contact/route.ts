@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 
 /**
- * Contact form endpoint. Posts the message through Resend's REST API — no SDK,
+ * Contact form endpoint. Posts the message through Resend's REST API, no SDK,
  * so there is nothing to keep up to date and no dependency to audit.
  *
  * Environment (set in Vercel → Project → Settings → Environment Variables):
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     "",
     message,
     "",
-    "—",
+    "--",
     "Sent from the contact form on arslantabish.com",
   ].join("\n");
 

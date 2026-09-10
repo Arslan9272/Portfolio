@@ -15,7 +15,7 @@ const socialPill =
   "glass inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]";
 
 /**
- * Contact — closing CTA. Chrome headline and the direct channels on the left,
+ * Contact, closing CTA. Chrome headline and the direct channels on the left,
  * the message form on the right.
  */
 export function Contact({ index = "06" }: { index?: string }) {

@@ -14,7 +14,7 @@ export type Project = {
 };
 
 export type ExperienceEntry = {
-  period: string; // e.g. "Jul 2024 — Present"
+  period: string; // e.g. "Jul 2024 – Present"
   role: string;
   org: string;
   location?: string;
@@ -45,9 +45,9 @@ export const site = {
   name: "Arslan Tabish",
   fullName: "Muhammad Arslan Tabish",
   role: "Full Stack AI Engineer",
-  tagline: "I build LLM products end to end — database to browser.",
+  tagline: "I build LLM products end to end, from the database to the browser.",
   intro:
-    "Full Stack AI Engineer with 2+ years of professional experience building LLM-powered products end to end \u2014 Python/FastAPI services and data models through to the React 19 / TypeScript interfaces I design and ship myself.",
+    "Full Stack AI Engineer with 2+ years of professional experience. I build LLM-powered products end to end, from the Python and FastAPI services and the data models underneath, up to the React 19 and TypeScript interfaces I design and ship myself.",
 
   stats: [
     { value: "2+", label: "Years professional" },
@@ -58,13 +58,13 @@ export const site = {
 
   aboutHeadline: "AI systems, not AI demos.",
   aboutLede:
-    "I build AI applications that put LLMs into real enterprise workflows \u2014 and keep them reliable in production.",
+    "I build AI applications that put LLMs into real enterprise workflows, and keep them reliable once they are running in production.",
   aboutGroups: [
     {
       label: "What I\u2019ve built",
       items: [
         "Built and deployed Cold Outreach Pipeline, a personal AI product that turns prospect data into personalised outreach. Reduced LLM API costs by 60% through guardrails, token controls and more efficient API usage.",
-        "Improved a Django email-sending workflow, cutting request times from 10\u201315 seconds to 5 seconds or less \u2014 a reduction of at least 50%.",
+        "Improved a Django email-sending workflow, cutting request times from 10 to 15 seconds down to 5 seconds or less. That is a reduction of at least 50%.",
         "Designed digital signage layouts for national quick-service restaurant chains, translating brand design systems into data-bound menu board interfaces.",
         "Redesigned an entire Next.js application\u2019s visual theme, creating a more polished, consistent experience across layouts and components.",
       ],
@@ -92,7 +92,7 @@ export const site = {
   availability: "Lahore · remote or relocation · 30 days notice",
   resumeUrl: "/Arslan_Tabish_Resume.pdf",
   contactBlurb:
-    "Open to AI engineering roles \u2014 remote or on site \u2014 and to contract work on LLM systems that need to survive production.",
+    "Open to AI engineering roles, remote or on site. Also happy to take on contract work for LLM systems that need to hold up in production.",
   socials: {
     github: "https://github.com/Arslan9272",
     githubHandle: "github.com/Arslan9272",
@@ -232,17 +232,17 @@ export const site = {
     {
       id: "ai",
       label: "AI systems",
-      note: "Self-built products \u2014 designed, built and run by me.",
+      note: "Products I built for myself. I designed them, shipped them and still run them.",
     },
     {
       id: "client",
       label: "Full-stack & frontend",
-      note: "Client delivery \u2014 design systems through to deployment.",
+      note: "Client work, from the design system through to deployment.",
     },
     {
       id: "company",
       label: "Professional work",
-      note: "Intagleo Systems \u2014 internal systems, client and product names withheld.",
+      note: "Intagleo Systems. These are internal systems, so client and product names are withheld.",
     },
   ] satisfies { id: ProjectGroup; label: string; note: string }[],
 
@@ -254,7 +254,7 @@ export const site = {
       subtitle: "AI lead-generation SaaS",
       bullets: [
         "A 9-stage, status-driven, resumable pipeline (extract, enrich, AI filter, gate, email, verify, AI copy, QA, sync) where every lead advances only on a valid stage transition, so runs crash and resume without duplicating work or LLM spend.",
-        "A defensive structured-output layer for all AI calls — fence stripping, JSON recovery, schema validation and retry with a corrective nudge before a typed ParseError — plus deterministic guardrails and an automated QA gate that blocks weak copy before it reaches a prospect.",
+        "A defensive structured-output layer wraps every AI call: fence stripping, JSON recovery, schema validation, then a retry with a corrective nudge before it gives up with a typed ParseError. Deterministic guardrails and an automated QA gate catch weak copy before it ever reaches a prospect.",
         "Apify, Airscale, MillionVerifier and Instantly integrated into a single enrichment-and-outreach flow with webhook-driven status sync and per-provider fallbacks.",
         "Multi-tenant isolation, BYOK API keys encrypted at rest with AES-256-GCM, Stripe checkout with plan limits, per-call token-cost attribution, and a zero-spend demo mode using a mock LLM behind a Python Protocol.",
       ],
@@ -273,7 +273,7 @@ export const site = {
       subtitle: "Voice-first conversational shopping agent",
       bullets: [
         "A catalogue-aware agent that walks shoppers through a facet-driven dialogue (category → kind → colour → size → price) and mirrors its filters live onto the storefront grid.",
-        "Claude slot extraction constrained to facet values that exist in the live catalogue, eliminating hallucinated and out-of-stock suggestions, with a deterministic keyword parser as a $0 fallback on missing key, timeout or malformed JSON — the conversation never breaks.",
+        "Claude only extracts slot values that actually exist in the live catalogue, so it never suggests something hallucinated or out of stock. A deterministic keyword parser takes over for free if the key is missing, the call times out or the JSON comes back malformed, so the conversation never breaks.",
         "Session engine, faceted search, a TTS proxy for voice output and the storefront front end on async SQLAlchemy 2.0 + PostgreSQL.",
       ],
       tech: ["FastAPI", "Claude", "SQLAlchemy 2.0", "React"],
@@ -286,15 +286,15 @@ export const site = {
       kind: "Market analysis · self-built",
       subtitle: "AI gold (XAUUSD) trading analyst",
       bullets: [
-        "A market-analysis assistant that computes market structure and indicators, renders charts, gathers macro context and asks Claude for a read — with one hard safety rail: it never places an order, it prints a full briefing (entry, stop, target, lot size, money at risk) and waits for the human.",
+        "A market-analysis assistant that works out market structure and indicators, renders charts, gathers macro context and asks Claude for a read. It has one hard safety rail: it never places an order. It prints a full briefing (entry, stop, target, lot size, money at risk) and then waits for a human.",
         "Architected to resist LLM over-eagerness: a deterministic scanner scores setups first and an API call is spent only above a configurable threshold, keeping cost near zero on quiet days.",
       ],
       tech: ["Python", "Claude", "Market data APIs"],
-      linkNote: "Source not public \u2014 walkthrough on request",
+      linkNote: "Source not public, walkthrough on request",
       accent: "linear-gradient(135deg, #5c553d, #0a0a0c)",
     },
     {
-      title: "Khaayaal \u2014 Elder-Care Platform",
+      title: "Khaayaal Elder-Care Platform",
       group: "client",
       kind: "Freelance project \u00b7 marketing site",
       subtitle: "Six-route marketing site for an elder-care service",
@@ -337,7 +337,7 @@ export const site = {
         "Automated code-review routing with GitHub integration and Excel compliance reporting.",
       ],
       tech: ["FastAPI", "PostgreSQL", "GitHub API"],
-      linkNote: "Internal system \u2014 not public",
+      linkNote: "Internal system, not public",
       accent: "linear-gradient(135deg, #3d4a5c, #0a0a0c)",
     },
     {
@@ -350,7 +350,7 @@ export const site = {
         "File uploads, automated email, unit tests and query optimisation.",
       ],
       tech: ["Django", "DRF", "PostgreSQL"],
-      linkNote: "Client work \u2014 not public",
+      linkNote: "Client work, not public",
       accent: "linear-gradient(135deg, #5c4a3d, #0a0a0c)",
     },
     {
@@ -363,7 +363,7 @@ export const site = {
         "TOTP two-factor auth, transactional email, AWS S3 file handling and structured logging.",
       ],
       tech: ["FastAPI", "MongoDB", "MySQL", "AWS S3"],
-      linkNote: "Internal system \u2014 not public",
+      linkNote: "Internal system, not public",
       accent: "linear-gradient(135deg, #3d5c5c, #0a0a0c)",
     },
     {
@@ -376,27 +376,27 @@ export const site = {
         "Data-bound 1920\u00d71080 / 1080\u00d71920 boards joining layout HTML/CSS with Excel product data.",
       ],
       tech: ["Node.js", "Express", "WebSocket"],
-      linkNote: "Internal system \u2014 not public",
+      linkNote: "Internal system, not public",
       accent: "linear-gradient(135deg, #5c3d4a, #0a0a0c)",
     },
   ] satisfies Project[],
 
   experience: [
     {
-      period: "Jul 2024 — Present",
+      period: "Jul 2024 – Present",
       role: "Software Engineer (Full Stack / Python)",
       org: "Intagleo Systems",
       location: "Lahore",
       highlights: [
-        "Build LLM-powered product features on the Anthropic Claude API — agentic workflows, RAG pipelines and prompt-engineered integrations — with structured outputs, schema validation and deterministic fallbacks so AI features fail safely in production.",
-        "Ship secure, scalable REST APIs in Python FastAPI — authentication, Pydantic validation, background jobs and business logic — across several production applications, plus Django/DRF services with role-based permissions.",
-        "Design and optimise data across PostgreSQL, MySQL and MongoDB — schema design, efficient queries, migrations and data integrity across systems.",
+        "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
+        "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
+        "Design and optimise data across PostgreSQL, MySQL and MongoDB, covering schema design, efficient queries, migrations and data integrity between systems.",
         "Deliver full-stack features with React / Next.js front ends against FastAPI services, and real-time WebSocket features for live chat and notifications.",
         "Automate internal engineering workflows (task routing, approvals, compliance reporting) in Python, and deliver in Agile teams with Git/GitHub code review, sprint planning and weekly client meetings.",
       ],
     },
     {
-      period: "Jun 2023 — Aug 2023",
+      period: "Jun 2023 – Aug 2023",
       role: "Software Developer Intern",
       org: "Wisdom Software House",
       location: "Lahore",
@@ -405,7 +405,7 @@ export const site = {
       highlights: [],
     },
     {
-      period: "Dec 2022 — Jan 2023",
+      period: "Dec 2022 – Jan 2023",
       role: "Software Developer Intern",
       org: "Devsloop",
       location: "Lahore",
@@ -418,11 +418,11 @@ export const site = {
   credentials: [
     {
       kind: "Degree",
-      period: "2020 \u2014 2024",
+      period: "2020 \u2013 2024",
       title: "BSc Computer Science",
       org: "University of the Punjab, Lahore",
       body:
-        "Four years of core computer science \u2014 data structures, algorithms, databases and systems. I was interning and shipping full-stack work before I graduated, so the degree and the production experience were built in parallel rather than one after the other.",
+        "Four years of core computer science: data structures, algorithms, databases and systems. I was already interning and shipping full-stack work before I graduated, so the degree and the real experience happened alongside each other rather than one after the other.",
       meta: ["Lahore, Pakistan", "BSCS"],
     },
     {
@@ -431,7 +431,7 @@ export const site = {
       title: "Runner-Up",
       org: "Battle Byte Programming Competition",
       body:
-        "Second place at Battle Byte, a university-level programming competition. Timed, and scored on working solutions rather than elegant ones \u2014 the same instinct that shows up in production work: get something correct and shipping first, then make it fast.",
+        "Second place at Battle Byte, a university-level programming competition. It was timed, and scored on working solutions rather than elegant ones. That is the same instinct I lean on at work: get something correct and shipping first, then go back and make it fast.",
       meta: ["Competitive programming"],
     },
     {
@@ -440,7 +440,7 @@ export const site = {
       title: "Python for FastAPI: Advanced Backend Development",
       org: "Udemy",
       body:
-        "Advanced FastAPI \u2014 async patterns, dependency injection, authentication and production project structure. It maps directly onto the FastAPI services I ship at Intagleo and the pipeline behind Cold Outreach Pipeline.",
+        "Advanced FastAPI: async patterns, dependency injection, authentication and how to structure a project for production. It maps directly onto the FastAPI services I ship at Intagleo and the pipeline behind Cold Outreach Pipeline.",
       meta: ["FastAPI", "Async Python"],
     },
     {
@@ -449,7 +449,7 @@ export const site = {
       title: "Python for Computer Vision and Deep Learning",
       org: "Udemy",
       body:
-        "OpenCV, deep learning fundamentals and image and video pipelines \u2014 the grounding behind the computer-vision side of my skill set: object detection, object tracking and real-time video processing.",
+        "OpenCV, deep learning fundamentals, and image and video pipelines. This is the grounding behind the computer-vision side of my skill set: object detection, object tracking and real-time video processing.",
       meta: ["OpenCV", "Deep learning"],
     },
   ] satisfies Credential[],

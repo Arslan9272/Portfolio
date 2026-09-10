@@ -43,7 +43,7 @@ function MetaChips({ meta }: { meta?: string[] }) {
 }
 
 /**
- * Education & achievements — the degree as a wide feature card with the years
+ * Education & achievements, the degree as a wide feature card with the years
  * set large on the left, then the competition placing and certifications as an
  * even grid beside it. Each entry carries a paragraph of context so the
  * section reads as substance rather than a list of titles.

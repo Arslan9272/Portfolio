@@ -4,7 +4,7 @@ import { Reveal } from "@/components/fx/Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 /**
- * About — deliberately short, because it sits after the work. One headline,
+ * About, deliberately short, because it sits after the work. One headline,
  * one sentence, the portrait, then a compact capability list and the quick
  * facts a recruiter scans for (location, availability, notice, languages).
  */

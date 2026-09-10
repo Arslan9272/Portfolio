@@ -5,7 +5,7 @@ const iconLink =
   "inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-fill)] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
 
 /**
- * Footer — thin glass-border rule, muted copyright, social icons and a
+ * Footer, thin glass-border rule, muted copyright, social icons and a
  * back-to-top anchor.
  */
 export function Footer() {

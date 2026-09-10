@@ -23,7 +23,7 @@ const item = {
 
 /**
  * Full-viewport chrome hero: a neural-network filament field washing in from
- * the right, shimmering chrome name, tagline, and the two primary CTAs —
+ * the right, shimmering chrome name, tagline, and the two primary CTAs ,
  * all staggered in on load.
  */
 export function Hero() {
@@ -111,7 +111,7 @@ export function Hero() {
           </MagneticButton>
         </motion.div>
 
-        {/* Stat strip — the quick-scan facts a recruiter looks for first */}
+        {/* Stat strip, the quick-scan facts a recruiter looks for first */}
         <motion.dl
           variants={item}
           className="mt-12 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--glass-border)] pt-8 sm:grid-cols-4 md:mt-14"

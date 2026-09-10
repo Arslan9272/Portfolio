@@ -18,7 +18,7 @@ function clamp(value: number, limit: number) {
 
 /**
  * Props framer-motion redefines with incompatible signatures on motion
- * elements — stripped from the native prop sets before spreading.
+ * elements, stripped from the native prop sets before spreading.
  */
 type MotionConflicts =
   | "onDrag"

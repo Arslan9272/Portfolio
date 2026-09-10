@@ -6,7 +6,7 @@ import { Reveal } from "@/components/fx/Reveal";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
- * Shared section heading: numbered eyebrow ("01 — About") followed by a
+ * Shared section heading: numbered eyebrow ("01 / About") followed by a
  * thin silver rule that draws in from the left as it scrolls into view.
  * `id` is referenced by the parent section's aria-labelledby.
  */
@@ -24,7 +24,7 @@ export function SectionHeader({
       <Reveal>
         <h2 id={id} className="eyebrow font-display font-semibold">
           <span aria-hidden className="text-[var(--fg-faint)]">
-            {index} —{" "}
+            {index} /{" "}
           </span>
           {label}
         </h2>

@@ -1,5 +1,5 @@
 /**
- * MetaRail — a subtle, right-aligned vertical metadata device used to fill
+ * MetaRail, a subtle, right-aligned vertical metadata device used to fill
  * the empty right column on text-led sections (About, Experience). A thin
  * hairline framed by small vertical mono labels. Decorative only; hidden on
  * mobile and never causes horizontal overflow (it lives inside a relatively

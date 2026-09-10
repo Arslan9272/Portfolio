@@ -76,7 +76,7 @@ function ProjectCard({
         className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-[image:var(--sheen)] transition-transform duration-700 ease-out group-hover:translate-x-full"
       />
 
-      {/* Art panel — screenshot plate over a CSS gradient */}
+      {/* Art panel, screenshot plate over a CSS gradient */}
       <div
         aria-hidden
         className={`relative brightness-100 saturate-100 transition-[filter] duration-300 ease-out group-hover:brightness-[1.15] group-hover:saturate-150 ${
@@ -87,7 +87,7 @@ function ProjectCard({
         {project.image ? (
           isRow ? (
             /* The row panel is tall and narrow, so a full-bleed crop would
-               show a meaningless sliver — float the shot as a plate instead. */
+               show a meaningless sliver, so float the shot as a plate instead. */
             <div className="absolute inset-0 flex items-center justify-center p-4 lg:p-5">
               <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-[var(--glass-border)] shadow-[var(--plate-shadow)] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
                 <Image
@@ -124,7 +124,7 @@ function ProjectCard({
         <span className="absolute left-6 top-5 font-mono text-[0.6875rem] tracking-[0.25em] text-white/50">
           {String(index + 1).padStart(2, "0")}
         </span>
-        {/* chrome orb accent — only where there is no screenshot to show */}
+        {/* chrome orb accent, only where there is no screenshot to show */}
         {!project.image && (
           <div
             className={`absolute bottom-5 right-6 h-10 w-10 rounded-full opacity-90 transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-110 ${
@@ -230,7 +230,7 @@ function ordinal(group: ProjectGroup) {
 }
 
 /**
- * Projects — banded the way the CV reads: the self-built AI systems first as
+ * Projects, banded the way the CV reads: the self-built AI systems first as
  * full-width rows, then client delivery as a two-up grid, then the internal
  * company work folded behind a toggle so the section leads with the work
  * that is actually inspectable.
@@ -251,7 +251,7 @@ export function Projects({ index = "02" }: { index?: string }) {
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <SectionHeader id="projects-heading" index={index} label="Projects" />
 
-        {/* AI systems — the headline work, one full-width row each */}
+        {/* AI systems, the headline work, one full-width row each */}
         <BandHeader label={aiBand.label} note={aiBand.note} />
         <motion.div
           variants={list}
@@ -290,7 +290,7 @@ export function Projects({ index = "02" }: { index?: string }) {
           </motion.div>
         </div>
 
-        {/* Company work — present but folded, since none of it is public */}
+        {/* Company work, present but folded, since none of it is public */}
         {company.length > 0 && (
           <div className="mt-16 md:mt-20">
             <BandHeader label={companyBand.label} note={companyBand.note} />
