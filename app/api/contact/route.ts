@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     message,
     "",
     "—",
-    "Sent from the contact form on arslan-tabish.vercel.app",
+    "Sent from the contact form on arslantabish.com",
   ].join("\n");
 
   try {

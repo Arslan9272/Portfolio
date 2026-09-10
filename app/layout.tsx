@@ -17,13 +17,24 @@ const TITLE = "Muhammad Arslan Tabish — Full Stack AI Engineer";
 const DESCRIPTION =
   "Full Stack AI Engineer in Lahore building LLM products end to end — Python/FastAPI services and data models through to React 19 and TypeScript interfaces.";
 
+const SITE_URL = "https://arslantabish.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     type: "website",
+    url: SITE_URL,
+    siteName: TITLE,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
