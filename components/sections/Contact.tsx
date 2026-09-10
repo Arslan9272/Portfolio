@@ -17,7 +17,7 @@ const socialPill =
 
 /**
  * Contact — closing CTA. Chrome headline and the direct channels on the left,
- * the Web3Forms message form on the right.
+ * the message form on the right.
  */
 export function Contact({ index = "06" }: { index?: string }) {
   return (
