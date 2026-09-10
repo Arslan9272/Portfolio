@@ -6,8 +6,6 @@ import { site } from "@/content/site";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
-
 const fieldClass =
   "w-full rounded-xl border border-[var(--glass-border)] bg-[var(--glass-fill)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-[border-color,background-color] duration-300 placeholder:text-[var(--fg-faint)] hover:border-[var(--border-strong)] focus:border-[var(--border-strong)] focus:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
 
@@ -15,15 +13,20 @@ const labelClass =
   "block text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]";
 
 /**
- * Get in touch — posts straight to Web3Forms from the browser, so there is no
- * backend to run and no inbox credentials on the site. The access key is
- * public by design; it identifies the form, not the account.
+ * Get in touch — posts to /api/contact, which relays through Resend. If the
+ * server reports no API key configured, the message is handed to the visitor's
+ * mail client instead so it is never silently dropped.
  */
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
 
-  const accessKey = site.web3formsKey;
+  function openMailClient(data: Record<string, FormDataEntryValue>) {
+    const body = `${data.message ?? ""}\n\n— ${data.name ?? ""} (${data.email ?? ""})`;
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+      `Portfolio enquiry from ${data.name || "a visitor"}`,
+    )}&body=${encodeURIComponent(body)}`;
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,49 +36,36 @@ export function ContactForm() {
     // Honeypot: bots fill hidden fields, humans never see them.
     if (data.botcheck) return;
 
-    // Until the Web3Forms key is set, hand the message off to the visitor's
-    // mail client rather than dropping it on the floor.
-    if (!accessKey) {
-      const body = `${data.message ?? ""}\n\n— ${data.name ?? ""} (${data.email ?? ""})`;
-      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-        `Portfolio enquiry from ${data.name || "a visitor"}`,
-      )}&body=${encodeURIComponent(body)}`;
-      setStatus("sent");
-      setError("");
-      form.reset();
-      return;
-    }
-
     setStatus("sending");
     setError("");
 
     try {
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: `Portfolio enquiry from ${data.name || "a visitor"}`,
-          from_name: "Portfolio contact form",
-          ...data,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
-
       const result = await response.json();
 
       if (response.ok && result.success) {
         setStatus("sent");
         form.reset();
-      } else {
-        setStatus("error");
-        setError(
-          result.message ||
-            "That didn't send. Try again, or email me directly.",
-        );
+        return;
       }
+
+      if (result.error === "not_configured") {
+        openMailClient(data);
+        setStatus("sent");
+        form.reset();
+        return;
+      }
+
+      setStatus("error");
+      setError(
+        typeof result.error === "string" && result.error !== "Sending failed."
+          ? result.error
+          : "That didn't send. Try again, or email me directly.",
+      );
     } catch {
       setStatus("error");
       setError(
@@ -106,6 +96,7 @@ export function ContactForm() {
             name="name"
             type="text"
             required
+            maxLength={120}
             autoComplete="name"
             placeholder="Jane Doe"
             className={`mt-2.5 ${fieldClass}`}
@@ -120,6 +111,7 @@ export function ContactForm() {
             name="email"
             type="email"
             required
+            maxLength={200}
             autoComplete="email"
             placeholder="jane@company.com"
             className={`mt-2.5 ${fieldClass}`}
@@ -136,6 +128,7 @@ export function ContactForm() {
           name="message"
           required
           rows={5}
+          maxLength={5000}
           placeholder="A line or two about the role or the project."
           className={`mt-2.5 resize-y ${fieldClass}`}
         />

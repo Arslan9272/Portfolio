@@ -91,9 +91,6 @@ export const site = {
   phone: "+92 300 0835300",
   availability: "Lahore · remote or relocation · 30 days notice",
   resumeUrl: "/Arslan_Tabish_Resume.pdf",
-  // Web3Forms access key. Public by design \u2014 it identifies the form, not the
-  // account, and Web3Forms expects it in client-side code.
-  web3formsKey: "",
   contactBlurb:
     "Open to AI engineering roles \u2014 remote or on site \u2014 and to contract work on LLM systems that need to survive production.",
   socials: {
