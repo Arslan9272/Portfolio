@@ -61,6 +61,15 @@ export const site = {
     "I build AI applications that put LLMs into real enterprise workflows \u2014 and keep them reliable in production.",
   aboutGroups: [
     {
+      label: "What I\u2019ve built",
+      items: [
+        "Built and deployed Cold Outreach Pipeline, a personal AI product that turns prospect data into personalised outreach. Reduced LLM API costs by 60% through guardrails, token controls and more efficient API usage.",
+        "Improved a Django email-sending workflow, cutting request times from 10\u201315 seconds to 5 seconds or less \u2014 a reduction of at least 50%.",
+        "Designed digital signage layouts for national quick-service restaurant chains, translating brand design systems into data-bound menu board interfaces.",
+        "Redesigned an entire Next.js application\u2019s visual theme, creating a more polished, consistent experience across layouts and components.",
+      ],
+    },
+    {
       label: "What I do well",
       items: [
         "Full stack development with Python, FastAPI, Django, React, Next.js and TypeScript.",

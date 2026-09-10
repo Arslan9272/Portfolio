@@ -12,7 +12,7 @@ import { SectionHeader } from "./SectionHeader";
  * scroll over the muted track; each entry is a glass card anchored by
  * a dot marker.
  */
-export function Experience({ index = "02" }: { index?: string }) {
+export function Experience({ index = "03" }: { index?: string }) {
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,

@@ -72,7 +72,7 @@ export function Contact({ index = "06" }: { index?: string }) {
                 </MagneticButton>
                 <MagneticButton href={site.resumeUrl} className={socialPill}>
                   <DownloadIcon />
-                  Résumé
+                  Resume
                 </MagneticButton>
               </div>
             </Reveal>

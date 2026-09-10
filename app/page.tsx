@@ -19,9 +19,9 @@ export default function Home() {
       <Nav />
       <main className="relative">
         <Hero />
-        <Projects index="01" />
-        <Experience index="02" />
-        <Skills index="03" />
+        <Skills index="01" />
+        <Projects index="02" />
+        <Experience index="03" />
         <Credentials index="04" />
         <About index="05" />
         <Contact index="06" />

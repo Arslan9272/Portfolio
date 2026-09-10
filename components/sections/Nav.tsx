@@ -13,9 +13,9 @@ import { ThemeToggle } from "@/components/fx/ThemeToggle";
 import { DownloadIcon, GitHubIcon, LinkedInIcon } from "@/components/fx/Icons";
 
 const LINKS = [
+  { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
   { label: "Education", href: "#education" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
@@ -124,7 +124,7 @@ export function Nav() {
               className="glass hidden h-10 items-center gap-2 rounded-full px-5 text-[0.8125rem] font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:inline-flex"
             >
               <DownloadIcon className="h-3.5 w-3.5" />
-              Résumé
+              Resume
             </a>
 
             {/* Hamburger (below lg) */}
@@ -207,7 +207,7 @@ export function Nav() {
                   className="glass inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-medium text-[var(--fg)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
                 >
                   <DownloadIcon className="h-4 w-4" />
-                  Résumé
+                  Resume
                 </a>
                 <a
                   href={site.socials.github}

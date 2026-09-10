@@ -28,9 +28,9 @@ export function About({ index = "05" }: { index?: string }) {
               </p>
             </Reveal>
 
-            {site.aboutGroups.map((group, groupIndex) => (
-              <Reveal key={group.label} delay={0.18 + groupIndex * 0.08}>
-                <div className="mt-12 md:mt-14">
+            <div className="mt-12 grid gap-10 md:mt-14 md:grid-cols-2 md:gap-12">
+              {site.aboutGroups.map((group, groupIndex) => (
+                <Reveal key={group.label} delay={0.18 + groupIndex * 0.08}>
                   <h3 className="eyebrow font-display font-semibold">
                     {group.label}
                   </h3>
@@ -38,7 +38,7 @@ export function About({ index = "05" }: { index?: string }) {
                     aria-hidden
                     className="mt-4 h-px bg-gradient-to-r from-[var(--glass-border)] to-transparent"
                   />
-                  <ul className="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-x-10">
+                  <ul className="mt-5 space-y-4">
                     {group.items.map((item) => (
                       <li
                         key={item}
@@ -52,9 +52,9 @@ export function About({ index = "05" }: { index?: string }) {
                       </li>
                     ))}
                   </ul>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              ))}
+            </div>
 
             <Reveal delay={0.28}>
               <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--glass-border)] pt-8 sm:grid-cols-4 md:mt-14">

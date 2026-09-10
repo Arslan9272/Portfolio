@@ -30,7 +30,7 @@ const chip = {
  * Skills — three frosted-glass group cards, each holding a staggered
  * cloud of glass chips. Cards lift slightly and brighten on hover.
  */
-export function Skills({ index = "03" }: { index?: string }) {
+export function Skills({ index = "01" }: { index?: string }) {
   return (
     <section id="skills" aria-labelledby="skills-heading">
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">

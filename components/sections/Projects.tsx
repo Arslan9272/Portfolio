@@ -235,7 +235,7 @@ function ordinal(group: ProjectGroup) {
  * company work folded behind a toggle so the section leads with the work
  * that is actually inspectable.
  */
-export function Projects({ index = "01" }: { index?: string }) {
+export function Projects({ index = "02" }: { index?: string }) {
   const [expanded, setExpanded] = useState(false);
 
   const ai = ordinal("ai");
