@@ -36,13 +36,13 @@ export function Hero() {
       {/* Atmosphere: faint top spotlight */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_-12%,rgba(220,225,235,0.09),transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_50%_-12%,var(--hero-spotlight),transparent_70%)]"
       />
 
       {/* Bloom under the densest part of the network so it reads as lit, not pasted */}
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-14%] top-1/2 h-[min(70vw,54rem)] w-[min(70vw,54rem)] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(190,200,220,0.10),transparent_66%)]"
+        className="pointer-events-none absolute right-[-14%] top-1/2 h-[min(70vw,54rem)] w-[min(70vw,54rem)] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--hero-bloom),transparent_66%)]"
       />
 
       {/* Neural-network filament field, masked so it fades out behind the copy */}
@@ -54,14 +54,14 @@ export function Hero() {
           loading="eager"
           fetchPriority="high"
           sizes="100vw"
-          className="object-cover opacity-30 [-webkit-mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] [mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] md:opacity-45"
+          className="object-cover opacity-[var(--hero-media-opacity)] [-webkit-mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] [filter:var(--hero-media-filter)] [mask-image:radial-gradient(ellipse_62%_68%_at_72%_44%,black_6%,transparent_74%)] md:opacity-[var(--hero-media-opacity-md)]"
         />
       </div>
 
       {/* Mobile readability scrim under the copy */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[rgba(5,5,6,0.5)] to-[var(--bg)] md:hidden"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[var(--panel-scrim)] to-[var(--bg)] md:hidden"
       />
 
       <motion.div
@@ -99,13 +99,13 @@ export function Hero() {
         >
           <MagneticButton
             href="#projects"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-[linear-gradient(135deg,#f8f9fb_0%,#d6d9df_45%,#a6aab4_100%)] px-8 text-sm font-semibold tracking-wide text-[#08080a] shadow-[0_8px_32px_rgba(220,225,235,0.16)] transition-shadow duration-300 hover:shadow-[0_10px_48px_rgba(220,225,235,0.3)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/80"
+            className="inline-flex h-12 items-center justify-center rounded-full accent-button px-8 text-sm font-semibold tracking-wide transition-shadow duration-300 hover:shadow-[var(--accent-shadow-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
           >
             View Projects
           </MagneticButton>
           <MagneticButton
             href="#contact"
-            className="glass inline-flex h-12 items-center justify-center rounded-full px-8 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-white/30 hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+            className="glass inline-flex h-12 items-center justify-center rounded-full px-8 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
           >
             Contact
           </MagneticButton>
@@ -139,7 +139,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.6, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
+        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-3 p-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
       >
         <span className="text-[0.625rem] uppercase tracking-[0.3em] text-[var(--fg-faint)]">
           Scroll

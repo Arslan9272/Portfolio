@@ -27,17 +27,30 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Applies the stored theme while the browser parses the HTML, before first
+ * paint, so a light-theme visitor never sees a dark flash. Dark is the
+ * default and lives on bare :root, so we only ever add the light attribute.
+ * See node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
+ */
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem("portfolio-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light"}else{document.documentElement.style.colorScheme="dark"}}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sora.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${sora.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="min-h-screen antialiased">
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

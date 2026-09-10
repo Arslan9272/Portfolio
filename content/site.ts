@@ -1,5 +1,8 @@
+export type ProjectGroup = "ai" | "client" | "company";
+
 export type Project = {
   title: string;
+  group: ProjectGroup; // which band of the projects section it belongs to
   kind: string; // e.g. "AI SaaS · self-built"
   subtitle: string; // one-line positioning
   bullets: string[]; // what the engineering actually does
@@ -23,9 +26,20 @@ export type SkillGroup = { label: string; skills: string[] };
 
 export type Stat = { value: string; label: string };
 
-export type Credential = { title: string; org: string; period?: string };
+export type CredentialKind = "Degree" | "Achievement" | "Certification";
+
+export type Credential = {
+  kind: CredentialKind;
+  period: string;
+  title: string;
+  org: string;
+  body: string;
+  meta?: string[];
+};
 
 export type AboutGroup = { label: string; items: string[] };
+
+export type Fact = { label: string; value: string };
 
 export const site = {
   name: "Arslan Tabish",
@@ -44,36 +58,35 @@ export const site = {
 
   aboutHeadline: "AI systems, not AI demos.",
   aboutLede:
-    "Resumable multi-stage agentic pipelines, schema-constrained output with validation and retry/repair, grounded generation and RAG, guardrails and automated QA gates, model routing and per-call cost accounting on the Anthropic Claude API. I own features from PostgreSQL schema to browser and into production on Docker, Vercel and Railway.",
+    "I build AI applications that put LLMs into real enterprise workflows \u2014 and keep them reliable in production.",
   aboutGroups: [
-    {
-      label: "What I\u2019ve built",
-      items: [
-        "Designed digital signage layouts for national quick-service restaurant chains, translating brand design systems into data-bound menu board interfaces.",
-        "Built and deployed Cold Outreach Pipeline, a personal AI product that turns prospect data into personalized outreach. Reduced LLM API costs by 60% through guardrails, token controls, and more efficient API usage.",
-        "Improved a Django email-sending workflow, reducing request times from 10\u201315 seconds to 5 seconds or less \u2014 a reduction of at least 50%.",
-        "Redesigned an entire Next.js application\u2019s visual theme, creating a more polished, consistent experience across layouts and components.",
-      ],
-    },
     {
       label: "What I do well",
       items: [
-        "Full stack development with Python, FastAPI, Django, React, Next.js, and TypeScript.",
-        "LLM integrations, RAG, and structured outputs that connect AI to business workflows.",
-        "Reliability through validation, retry logic, failure recovery, and human review.",
-        "Turning complex business requirements into maintainable software and clear user interfaces.",
+        "Full stack development with Python, FastAPI, Django, React, Next.js and TypeScript.",
+        "LLM integrations, RAG and structured outputs that connect AI to business workflows.",
+        "Reliability through validation, retry logic, failure recovery and human review.",
+        "Turning complex business requirements into maintainable software and clear interfaces.",
       ],
     },
   ] satisfies AboutGroup[],
-  lookingFor: {
-    label: "What I\u2019m looking for",
-    body: "Software and AI engineering opportunities where I can own features, solve meaningful problems, and grow alongside strong engineers. Based in Pakistan. Open to remote work and relocation for the right opportunity.",
-  },
+
+  aboutFacts: [
+    { label: "Based in", value: "Lahore, Pakistan" },
+    { label: "Open to", value: "Remote or relocation" },
+    { label: "Notice", value: "30 days" },
+    { label: "Languages", value: "English, Urdu, Punjabi" },
+  ] satisfies Fact[],
 
   email: "arslantabish2001@gmail.com",
   phone: "+92 300 0835300",
   availability: "Lahore · remote or relocation · 30 days notice",
   resumeUrl: "/Arslan_Tabish_Resume.pdf",
+  // Web3Forms access key. Public by design \u2014 it identifies the form, not the
+  // account, and Web3Forms expects it in client-side code.
+  web3formsKey: "",
+  contactBlurb:
+    "Open to AI engineering roles \u2014 remote or on site \u2014 and to contract work on LLM systems that need to survive production.",
   socials: {
     github: "https://github.com/Arslan9272",
     githubHandle: "github.com/Arslan9272",
@@ -209,9 +222,28 @@ export const site = {
     },
   ] satisfies SkillGroup[],
 
+  projectGroups: [
+    {
+      id: "ai",
+      label: "AI systems",
+      note: "Self-built products \u2014 designed, built and run by me.",
+    },
+    {
+      id: "client",
+      label: "Full-stack & frontend",
+      note: "Client delivery \u2014 design systems through to deployment.",
+    },
+    {
+      id: "company",
+      label: "Professional work",
+      note: "Intagleo Systems \u2014 internal systems, client and product names withheld.",
+    },
+  ] satisfies { id: ProjectGroup; label: string; note: string }[],
+
   projects: [
     {
       title: "Cold Outreach Pipeline",
+      group: "ai",
       kind: "AI SaaS · self-built",
       subtitle: "AI lead-generation SaaS",
       bullets: [
@@ -230,6 +262,7 @@ export const site = {
     },
     {
       title: "Dukandar AI",
+      group: "ai",
       kind: "Conversational AI · self-built",
       subtitle: "Voice-first conversational shopping agent",
       bullets: [
@@ -243,6 +276,7 @@ export const site = {
     },
     {
       title: "GoldWatch",
+      group: "ai",
       kind: "Market analysis · self-built",
       subtitle: "AI gold (XAUUSD) trading analyst",
       bullets: [
@@ -255,6 +289,7 @@ export const site = {
     },
     {
       title: "Khaayaal \u2014 Elder-Care Platform",
+      group: "client",
       kind: "Freelance project \u00b7 marketing site",
       subtitle: "Six-route marketing site for an elder-care service",
       bullets: [
@@ -271,6 +306,7 @@ export const site = {
     },
     {
       title: "Leads In The Pipe",
+      group: "client",
       kind: "Freelance project \u00b7 Figma to production",
       subtitle: "B2B agency website on a serverless API",
       bullets: [
@@ -287,6 +323,7 @@ export const site = {
     },
     {
       title: "Internal Engineering Operations Portal",
+      group: "company",
       kind: "Company project \u00b7 internal platform",
       subtitle: "Project tracking and engineering-workflow automation",
       bullets: [
@@ -299,6 +336,7 @@ export const site = {
     },
     {
       title: "Admin Panel Backend",
+      group: "company",
       kind: "Company project \u00b7 enterprise client",
       subtitle: "Secure Django / DRF back office",
       bullets: [
@@ -311,6 +349,7 @@ export const site = {
     },
     {
       title: "Multi-Database Service Platform",
+      group: "company",
       kind: "Company project \u00b7 internal platform",
       subtitle: "Layered FastAPI service over MongoDB and MySQL",
       bullets: [
@@ -323,6 +362,7 @@ export const site = {
     },
     {
       title: "Digital Signage Layout & Live-Preview Tooling",
+      group: "company",
       kind: "Company project \u00b7 digital signage",
       subtitle: "Layout and live-preview workspace for menu boards",
       bullets: [
@@ -369,30 +409,42 @@ export const site = {
     },
   ] satisfies ExperienceEntry[],
 
-  education: [
+  credentials: [
     {
-      title: "BSc Computer Science (BSCS)",
+      kind: "Degree",
+      period: "2020 \u2014 2024",
+      title: "BSc Computer Science",
       org: "University of the Punjab, Lahore",
-      period: "2020 — 2024",
+      body:
+        "Four years of core computer science \u2014 data structures, algorithms, databases and systems. I was interning and shipping full-stack work before I graduated, so the degree and the production experience were built in parallel rather than one after the other.",
+      meta: ["Lahore, Pakistan", "BSCS"],
     },
-  ] satisfies Credential[],
-
-  certifications: [
     {
+      kind: "Achievement",
+      period: "University level",
+      title: "Runner-Up",
+      org: "Battle Byte Programming Competition",
+      body:
+        "Second place at Battle Byte, a university-level programming competition. Timed, and scored on working solutions rather than elegant ones \u2014 the same instinct that shows up in production work: get something correct and shipping first, then make it fast.",
+      meta: ["Competitive programming"],
+    },
+    {
+      kind: "Certification",
+      period: "Udemy",
       title: "Python for FastAPI: Advanced Backend Development",
-      org: "Udemy — certification",
+      org: "Udemy",
+      body:
+        "Advanced FastAPI \u2014 async patterns, dependency injection, authentication and production project structure. It maps directly onto the FastAPI services I ship at Intagleo and the pipeline behind Cold Outreach Pipeline.",
+      meta: ["FastAPI", "Async Python"],
     },
     {
+      kind: "Certification",
+      period: "Udemy",
       title: "Python for Computer Vision and Deep Learning",
-      org: "Udemy — certification",
-    },
-    {
-      title: "Battle Byte Programming Competition — Runner-Up",
-      org: "University level",
-    },
-    {
-      title: "English (fluent) · Urdu (native) · Punjabi (native)",
-      org: "Languages",
+      org: "Udemy",
+      body:
+        "OpenCV, deep learning fundamentals and image and video pipelines \u2014 the grounding behind the computer-vision side of my skill set: object detection, object tracking and real-time video processing.",
+      meta: ["OpenCV", "Deep learning"],
     },
   ] satisfies Credential[],
 };

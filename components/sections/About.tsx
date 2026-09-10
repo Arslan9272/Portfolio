@@ -4,33 +4,33 @@ import { Reveal } from "@/components/fx/Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 /**
- * About — headline and lede, then the two evidence lists ("what I've built",
- * "what I do well") as ruled bullets. The portrait sits in a glass frame on
- * the right with the availability note tucked underneath it.
+ * About — deliberately short, because it sits after the work. One headline,
+ * one sentence, the portrait, then a compact capability list and the quick
+ * facts a recruiter scans for (location, availability, notice, languages).
  */
-export function About() {
+export function About({ index = "05" }: { index?: string }) {
   return (
     <section id="about" aria-labelledby="about-heading">
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeader id="about-heading" index="01" label="About" />
+        <SectionHeader id="about-heading" index={index} label="About" />
 
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:gap-16">
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)] lg:gap-16">
           <div>
             <Reveal>
-              <p className="mb-8 font-display text-[clamp(1.75rem,4.5vw,2.75rem)] font-semibold leading-[1.1] tracking-tight text-[var(--fg)] md:mb-10">
+              <p className="font-display text-[clamp(1.75rem,4.5vw,2.75rem)] font-semibold leading-[1.1] tracking-tight text-[var(--fg)]">
                 {site.aboutHeadline}
               </p>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="max-w-3xl font-display text-[1.4rem] font-light leading-[1.45] tracking-tight text-[var(--fg)] md:text-[1.75rem]">
+              <p className="mt-6 max-w-2xl font-display text-[1.35rem] font-light leading-[1.5] tracking-tight text-[var(--fg-muted)] md:mt-8 md:text-[1.6rem]">
                 {site.aboutLede}
               </p>
             </Reveal>
 
-            <div className="mt-12 grid gap-10 md:mt-14 md:grid-cols-2 md:gap-12">
-              {site.aboutGroups.map((group, groupIndex) => (
-                <Reveal key={group.label} delay={0.15 + groupIndex * 0.1}>
+            {site.aboutGroups.map((group, groupIndex) => (
+              <Reveal key={group.label} delay={0.18 + groupIndex * 0.08}>
+                <div className="mt-12 md:mt-14">
                   <h3 className="eyebrow font-display font-semibold">
                     {group.label}
                   </h3>
@@ -38,7 +38,7 @@ export function About() {
                     aria-hidden
                     className="mt-4 h-px bg-gradient-to-r from-[var(--glass-border)] to-transparent"
                   />
-                  <ul className="mt-5 space-y-4">
+                  <ul className="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-x-10">
                     {group.items.map((item) => (
                       <li
                         key={item}
@@ -52,38 +52,44 @@ export function About() {
                       </li>
                     ))}
                   </ul>
-                </Reveal>
-              ))}
-            </div>
+                </div>
+              </Reveal>
+            ))}
+
+            <Reveal delay={0.28}>
+              <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--glass-border)] pt-8 sm:grid-cols-4 md:mt-14">
+                {site.aboutFacts.map((fact) => (
+                  <div key={fact.label}>
+                    <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
+                      {fact.label}
+                    </dt>
+                    <dd className="mt-2 text-sm text-[var(--fg)]">
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Reveal>
           </div>
 
           <Reveal delay={0.2} className="lg:pt-2">
-            <figure className="group relative mx-auto max-w-sm lg:max-w-none">
-              <div className="relative overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_30px_70px_-24px_rgba(0,0,0,0.8)]">
+            <figure className="group relative mx-auto max-w-xs lg:max-w-none">
+              <div className="relative overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-[inset_0_1px_0_var(--inset-highlight),var(--card-shadow)]">
                 <Image
                   src="/arslan-portrait.jpg"
                   alt={`${site.fullName}, ${site.role}`}
                   width={693}
                   height={866}
-                  sizes="(min-width: 1024px) 20rem, (min-width: 640px) 24rem, 100vw"
+                  sizes="(min-width: 1024px) 18rem, (min-width: 640px) 20rem, 100vw"
                   className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
                 {/* settle the frame into the page background */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(5,5,6,0.42)] via-transparent to-[rgba(255,255,255,0.04)]"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--panel-scrim-soft)] via-transparent to-[var(--inset-highlight)]"
                 />
               </div>
             </figure>
-
-            <div className="glass-card mt-8 p-6">
-              <h3 className="eyebrow font-display font-semibold">
-                {site.lookingFor.label}
-              </h3>
-              <p className="mt-4 text-sm leading-[1.75] text-[var(--fg-muted)]">
-                {site.lookingFor.body}
-              </p>
-            </div>
           </Reveal>
         </div>
       </div>

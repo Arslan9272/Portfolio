@@ -2,115 +2,140 @@ import { site } from "@/content/site";
 import { Reveal } from "@/components/fx/Reveal";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 import { SectionHeader } from "./SectionHeader";
+import { ContactForm } from "./ContactForm";
+import {
+  ArrowUpRightIcon,
+  DownloadIcon,
+  GitHubIcon,
+  LinkedInIcon,
+  MailIcon,
+  PhoneIcon,
+} from "@/components/fx/Icons";
+
+const socialPill =
+  "glass inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]";
 
 /**
- * Contact — closing CTA: big chrome headline, the email as a large
- * magnetic mailto link, and glass-pill social buttons.
+ * Contact — closing CTA. Chrome headline and the direct channels on the left,
+ * the Web3Forms message form on the right.
  */
-export function Contact() {
+export function Contact({ index = "06" }: { index?: string }) {
   return (
     <section id="contact" aria-labelledby="contact-heading">
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-36">
-        <SectionHeader id="contact-heading" index="06" label="Get in touch" />
+        <SectionHeader id="contact-heading" index={index} label="Get in touch" />
 
         <Reveal delay={0.1}>
-          <p className="chrome-text-animated max-w-4xl font-display text-[clamp(2.5rem,8vw,5.5rem)] font-extrabold leading-[1.02] tracking-tight">
+          <p className="chrome-text-animated max-w-4xl font-display text-[clamp(2.25rem,7vw,4.5rem)] font-extrabold leading-[1.02] tracking-tight">
             Let&rsquo;s build something.
           </p>
         </Reveal>
 
         <Reveal delay={0.15}>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--fg-muted)]">
-            Open to AI engineering roles — remote or on site.
+            {site.contactBlurb}
           </p>
         </Reveal>
 
-        <Reveal delay={0.2}>
-          <MagneticButton
-            href={`mailto:${site.email}`}
-            className="group relative mt-10 inline-flex max-w-full items-baseline gap-3 py-2 font-display text-xl font-light tracking-tight text-[var(--fg)] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-white/25 after:transition-[background-color] after:duration-300 hover:after:bg-white/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70 sm:text-2xl md:mt-12 md:text-4xl"
-          >
-            <span className="[overflow-wrap:anywhere]">{site.email}</span>
-            <span
-              aria-hidden
-              className="text-[0.6em] text-[var(--fg-muted)] transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-            >
-              ↗
-            </span>
-          </MagneticButton>
-        </Reveal>
+        <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
+          <div>
+            <Reveal delay={0.2}>
+              <MagneticButton
+                href={`mailto:${site.email}`}
+                className="group relative inline-flex max-w-full items-center gap-3 py-2 font-display text-lg font-light tracking-tight text-[var(--fg)] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-[var(--glass-border)] after:transition-[background-color] after:duration-300 hover:after:bg-[var(--border-strong)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:text-2xl"
+              >
+                <MailIcon className="h-5 w-5 shrink-0 text-[var(--fg-muted)]" />
+                <span className="[overflow-wrap:anywhere]">{site.email}</span>
+                <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-[var(--fg-muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </MagneticButton>
+            </Reveal>
 
-        <Reveal delay={0.3}>
-          <div className="mt-12 flex flex-wrap items-center gap-4 md:mt-16">
-            <MagneticButton
-              href={site.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass inline-flex h-12 items-center justify-center rounded-full px-7 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-white/30 hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
-            >
-              GitHub
-            </MagneticButton>
-            <MagneticButton
-              href={site.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass inline-flex h-12 items-center justify-center rounded-full px-7 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-white/30 hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
-            >
-              LinkedIn
-            </MagneticButton>
-            <MagneticButton
-              href={site.resumeUrl}
-              className="glass inline-flex h-12 items-center justify-center rounded-full px-7 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-white/30 hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
-            >
-              Résumé ↓
-            </MagneticButton>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.35}>
-          <dl className="mt-16 grid gap-x-10 gap-y-8 border-t border-[var(--glass-border)] pt-10 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { term: "Email", value: site.email, href: `mailto:${site.email}` },
-              {
-                term: "Phone",
-                value: site.phone,
-                href: `tel:${site.phone.replace(/\s+/g, "")}`,
-              },
-              {
-                term: "LinkedIn",
-                value: site.socials.linkedinHandle,
-                href: site.socials.linkedin,
-              },
-              {
-                term: "GitHub",
-                value: site.socials.githubHandle,
-                href: site.socials.github,
-              },
-            ].map((row) => (
-              <div key={row.term}>
-                <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
-                  {row.term}
-                </dt>
-                <dd className="mt-2">
-                  <a
-                    href={row.href}
-                    className="text-sm text-[var(--fg-muted)] transition-colors duration-300 [overflow-wrap:anywhere] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70"
-                  >
-                    {row.value}
-                  </a>
-                </dd>
+            <Reveal delay={0.26}>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <MagneticButton
+                  href={site.socials.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialPill}
+                >
+                  <GitHubIcon />
+                  GitHub
+                </MagneticButton>
+                <MagneticButton
+                  href={site.socials.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialPill}
+                >
+                  <LinkedInIcon />
+                  LinkedIn
+                </MagneticButton>
+                <MagneticButton href={site.resumeUrl} className={socialPill}>
+                  <DownloadIcon />
+                  Résumé
+                </MagneticButton>
               </div>
-            ))}
-            <div className="sm:col-span-2 lg:col-span-4">
-              <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
-                Availability
-              </dt>
-              <dd className="mt-2 text-sm text-[var(--fg-muted)]">
-                {site.availability}
-              </dd>
-            </div>
-          </dl>
-        </Reveal>
+            </Reveal>
+
+            <Reveal delay={0.32}>
+              <dl className="mt-10 grid gap-x-10 gap-y-7 border-t border-[var(--glass-border)] pt-9 sm:grid-cols-2">
+                {[
+                  {
+                    term: "Phone",
+                    value: site.phone,
+                    href: `tel:${site.phone.replace(/\s+/g, "")}`,
+                    icon: <PhoneIcon className="h-3.5 w-3.5" />,
+                  },
+                  {
+                    term: "LinkedIn",
+                    value: site.socials.linkedinHandle,
+                    href: site.socials.linkedin,
+                    icon: <LinkedInIcon className="h-3.5 w-3.5" />,
+                  },
+                  {
+                    term: "GitHub",
+                    value: site.socials.githubHandle,
+                    href: site.socials.github,
+                    icon: <GitHubIcon className="h-3.5 w-3.5" />,
+                  },
+                  {
+                    term: "Email",
+                    value: site.email,
+                    href: `mailto:${site.email}`,
+                    icon: <MailIcon className="h-3.5 w-3.5" />,
+                  },
+                ].map((row) => (
+                  <div key={row.term}>
+                    <dt className="flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
+                      {row.icon}
+                      {row.term}
+                    </dt>
+                    <dd className="mt-2">
+                      <a
+                        href={row.href}
+                        className="text-sm text-[var(--fg-muted)] transition-colors duration-300 [overflow-wrap:anywhere] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                      >
+                        {row.value}
+                      </a>
+                    </dd>
+                  </div>
+                ))}
+                <div className="sm:col-span-2">
+                  <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
+                    Availability
+                  </dt>
+                  <dd className="mt-2 text-sm text-[var(--fg-muted)]">
+                    {site.availability}
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.24}>
+            <ContactForm />
+          </Reveal>
+        </div>
       </div>
     </section>
   );

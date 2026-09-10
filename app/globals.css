@@ -1,14 +1,26 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------
+   Theme tokens.
+
+   Dark is the default: bare :root carries the dark palette, so the
+   site renders dark even before the theme script runs. Light is an
+   explicit opt-in via [data-theme="light"] on <html>, set by the
+   inline script in app/layout.tsx before first paint.
+   --------------------------------------------------------------- */
+
 :root {
   --bg: #050506;
   --bg-elevated: #0a0a0c;
   --fg: #ededed;
   --fg-muted: #9a9aa2;
   --fg-faint: #7a7a82;
+
   --glass-fill: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.13);
   --glass-fill-hover: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --border-strong: rgba(255, 255, 255, 0.3);
+
   --chrome-gradient: linear-gradient(
     150deg,
     #ffffff 0%,
@@ -20,6 +32,117 @@
     #ffffff 100%
   );
   --glow: rgba(220, 225, 235, 0.16);
+
+  /* Surfaces layered over the page: nav bar, mobile menu, image scrims */
+  --nav-scrim: rgba(5, 5, 6, 0.62);
+  --overlay-scrim: rgba(5, 5, 6, 0.92);
+  --panel-scrim: rgba(5, 5, 6, 0.6);
+  --panel-scrim-soft: rgba(5, 5, 6, 0.42);
+
+  --inset-highlight: rgba(255, 255, 255, 0.12);
+  --inset-highlight-strong: rgba(255, 255, 255, 0.16);
+  --card-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+  --card-shadow-hover: 0 30px 72px -18px rgba(0, 0, 0, 0.78);
+  --plate-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.85);
+
+  --sheen: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.07) 50%,
+    transparent 58%
+  );
+  --rule-bright: rgba(255, 255, 255, 0.4);
+
+  /* The hero filament plate is authored light-on-dark */
+  --hero-media-opacity: 0.3;
+  --hero-media-opacity-md: 0.45;
+  --hero-media-filter: none;
+  --hero-spotlight: rgba(220, 225, 235, 0.09);
+  --hero-bloom: rgba(190, 200, 220, 0.1);
+
+  --selection-bg: rgba(220, 225, 235, 0.9);
+  --selection-fg: #050506;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
+
+  --focus-ring: rgba(255, 255, 255, 0.7);
+  --on-accent: #08080a;
+  --accent-fill: linear-gradient(
+    135deg,
+    #f8f9fb 0%,
+    #d6d9df 45%,
+    #a6aab4 100%
+  );
+  --accent-shadow: 0 8px 32px rgba(220, 225, 235, 0.16);
+  --accent-shadow-hover: 0 10px 48px rgba(220, 225, 235, 0.3);
+}
+
+:root[data-theme="light"] {
+  --bg: #f4f5f7;
+  --bg-elevated: #ffffff;
+  --fg: #14151a;
+  --fg-muted: #52545e;
+  --fg-faint: #7c7f8a;
+
+  --glass-fill: rgba(255, 255, 255, 0.72);
+  --glass-fill-hover: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(18, 20, 28, 0.12);
+  --border-strong: rgba(18, 20, 28, 0.28);
+
+  /* Graphite, not silver — a white-hot gradient is invisible on light */
+  --chrome-gradient: linear-gradient(
+    150deg,
+    #2a2d35 0%,
+    #4c515c 18%,
+    #8d929d 34%,
+    #23262d 50%,
+    #6e737e 64%,
+    #3a3e47 80%,
+    #1b1d23 100%
+  );
+  --glow: rgba(40, 46, 60, 0.1);
+
+  --nav-scrim: rgba(244, 245, 247, 0.75);
+  --overlay-scrim: rgba(244, 245, 247, 0.96);
+  --panel-scrim: rgba(20, 21, 26, 0.35);
+  --panel-scrim-soft: rgba(20, 21, 26, 0.18);
+
+  --inset-highlight: rgba(255, 255, 255, 0.85);
+  --inset-highlight-strong: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 18px 44px -22px rgba(20, 24, 38, 0.28);
+  --card-shadow-hover: 0 26px 60px -20px rgba(20, 24, 38, 0.34);
+  --plate-shadow: 0 14px 32px -12px rgba(20, 24, 38, 0.3);
+
+  --sheen: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 58%
+  );
+  --rule-bright: rgba(18, 20, 28, 0.35);
+
+  /* Flip the filament plate so light strokes read as dark ink */
+  --hero-media-opacity: 0.14;
+  --hero-media-opacity-md: 0.2;
+  --hero-media-filter: invert(1) hue-rotate(180deg);
+  --hero-spotlight: rgba(40, 46, 60, 0.07);
+  --hero-bloom: rgba(60, 70, 95, 0.08);
+
+  --selection-bg: rgba(20, 24, 38, 0.85);
+  --selection-fg: #ffffff;
+  --scrollbar-thumb: rgba(18, 20, 28, 0.2);
+  --scrollbar-thumb-hover: rgba(18, 20, 28, 0.32);
+
+  --focus-ring: rgba(20, 24, 38, 0.65);
+  --on-accent: #ffffff;
+  --accent-fill: linear-gradient(
+    135deg,
+    #33373f 0%,
+    #202329 45%,
+    #101216 100%
+  );
+  --accent-shadow: 0 8px 28px rgba(20, 24, 38, 0.2);
+  --accent-shadow-hover: 0 10px 40px rgba(20, 24, 38, 0.3);
 }
 
 @theme inline {
@@ -41,6 +164,7 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--font-sans);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* ---------- Utility classes ---------- */
@@ -62,8 +186,8 @@ body {
   backdrop-filter: blur(20px);
   border-radius: 1rem;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 24px 60px -20px rgba(0, 0, 0, 0.7);
+    inset 0 1px 0 var(--inset-highlight),
+    var(--card-shadow);
 }
 
 @utility chrome-text {
@@ -85,10 +209,10 @@ body {
 /* Hero H1: layer a thin top inner light over the chrome so the type
    catches light like the blob. Pairs with chrome-text-animated. */
 @utility chrome-h1-light {
-  -webkit-filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
-    drop-shadow(0 2px 12px rgba(220, 225, 235, 0.14));
-  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.28))
-    drop-shadow(0 2px 12px rgba(220, 225, 235, 0.14));
+  -webkit-filter: drop-shadow(0 1px 0 var(--inset-highlight))
+    drop-shadow(0 2px 12px var(--glow));
+  filter: drop-shadow(0 1px 0 var(--inset-highlight))
+    drop-shadow(0 2px 12px var(--glow));
 }
 
 @keyframes chrome-shimmer {
@@ -107,16 +231,29 @@ body {
   color: var(--fg-muted);
 }
 
+/* Solid pill used for primary actions (hero CTA, form submit). */
+@utility accent-button {
+  background: var(--accent-fill);
+  color: var(--on-accent);
+  box-shadow: var(--accent-shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chrome-text-animated {
+    animation: none;
+  }
+}
+
 /* ---------- Selection & scrollbar ---------- */
 
 ::selection {
-  background: rgba(220, 225, 235, 0.9);
-  color: #050506;
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -129,11 +266,11 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--scrollbar-thumb);
   border-radius: 8px;
   border: 2px solid var(--bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--scrollbar-thumb-hover);
 }

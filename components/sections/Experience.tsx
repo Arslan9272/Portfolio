@@ -12,7 +12,7 @@ import { SectionHeader } from "./SectionHeader";
  * scroll over the muted track; each entry is a glass card anchored by
  * a dot marker.
  */
-export function Experience() {
+export function Experience({ index = "02" }: { index?: string }) {
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -27,8 +27,8 @@ export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-heading">
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <MetaRail index="04" label="Experience" />
-        <SectionHeader id="experience-heading" index="04" label="Experience" />
+        <MetaRail index={index} label="Experience" />
+        <SectionHeader id="experience-heading" index={index} label="Experience" />
 
         <div ref={timelineRef} className="relative max-w-3xl">
           {/* track */}
@@ -40,20 +40,20 @@ export function Experience() {
           <motion.div
             aria-hidden
             style={{ scaleY: lineScale }}
-            className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-gradient-to-b from-white/80 via-white/45 to-white/15 shadow-[0_0_12px_var(--glow)]"
+            className="absolute bottom-2 left-[5px] top-2 w-px origin-top bg-gradient-to-b from-[var(--fg)] via-[var(--fg-muted)] to-transparent shadow-[0_0_12px_var(--glow)]"
           />
 
           <ol className="space-y-10 md:space-y-12">
-            {site.experience.map((entry, index) => (
+            {site.experience.map((entry, position) => (
               <li key={`${entry.org}-${entry.period}`} className="relative pl-10 md:pl-14">
                 {/* dot marker */}
                 <span
                   aria-hidden
-                  className="absolute left-0 top-7 block h-[11px] w-[11px] rounded-full border border-white/55 bg-[var(--bg)] shadow-[0_0_10px_var(--glow)]"
+                  className="absolute left-0 top-7 block h-[11px] w-[11px] rounded-full border border-[var(--border-strong)] bg-[var(--bg)] shadow-[0_0_10px_var(--glow)]"
                 />
 
-                <Reveal delay={index * 0.05}>
-                  <article className="glass-card p-6 transition-[border-color,background-color] duration-300 hover:border-white/25 hover:bg-[var(--glass-fill-hover)] md:p-7">
+                <Reveal delay={position * 0.05}>
+                  <article className="glass-card p-6 transition-[border-color,background-color] duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] md:p-7">
                     <p className="font-mono text-xs tracking-[0.2em] text-[var(--fg-faint)]">
                       {entry.period}
                     </p>
