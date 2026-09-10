@@ -13,20 +13,13 @@ const labelClass =
   "block text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]";
 
 /**
- * Get in touch — posts to /api/contact, which relays through Resend. If the
- * server reports no API key configured, the message is handed to the visitor's
- * mail client instead so it is never silently dropped.
+ * Get in touch — posts to /api/contact, which relays through Resend. Sending
+ * happens entirely in the background; the visitor's mail client is never
+ * opened. Failures surface in place, with the address as a fallback.
  */
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string>("");
-
-  function openMailClient(data: Record<string, FormDataEntryValue>) {
-    const body = `${data.message ?? ""}\n\n— ${data.name ?? ""} (${data.email ?? ""})`;
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-      `Portfolio enquiry from ${data.name || "a visitor"}`,
-    )}&body=${encodeURIComponent(body)}`;
-  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -54,9 +47,10 @@ export function ContactForm() {
       }
 
       if (result.error === "not_configured") {
-        openMailClient(data);
-        setStatus("sent");
-        form.reset();
+        setStatus("error");
+        setError(
+          `The form isn't hooked up yet — reach me at ${site.email} in the meantime.`,
+        );
         return;
       }
 
