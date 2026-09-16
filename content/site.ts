@@ -52,7 +52,7 @@ export const site = {
 
   stats: [
     { value: "3", label: "Years professional" },
-    { value: "9", label: "Shipped projects" },
+    { value: "10", label: "Shipped projects" },
     { value: "Full stack", label: "Python · React · LLM" },
     { value: "30 days", label: "Notice period" },
   ] satisfies Stat[],
@@ -121,7 +121,7 @@ export const site = {
       skills: [
         "Agentic workflows",
         "Multi-stage AI pipelines",
-        "Tool / function calling",
+        "Tool and function calling",
         "LangGraph",
         "LangChain",
         "MCP (Model Context Protocol)",
@@ -154,7 +154,7 @@ export const site = {
         "Eval harnesses",
         "Retrieval evaluation",
         "LLM observability",
-        "Prompt / model evaluation",
+        "Prompt and model evaluation",
         "Failure analysis",
       ],
     },
@@ -187,7 +187,7 @@ export const site = {
       skills: [
         "Python 3.12+",
         "FastAPI",
-        "async / await",
+        "async and await",
         "asyncio",
         "Pydantic v2",
         "SQLAlchemy 2.0 async",
@@ -201,13 +201,13 @@ export const site = {
     {
       label: "Frontend",
       skills: [
-        "React 18/19",
+        "React 18 and 19",
         "TypeScript",
         "Next.js",
         "Vite",
-        "TanStack Start / Router / Query",
+        "TanStack Start, Router and Query",
         "Tailwind CSS",
-        "Radix UI / shadcn",
+        "Radix UI and shadcn",
         "Framer Motion",
         "React Three Fiber",
         "React Hook Form",
@@ -222,7 +222,7 @@ export const site = {
         "Railway",
         "AWS S3",
         "Cloudflare",
-        "GitHub / GitLab",
+        "GitHub and GitLab",
         "CI/CD",
         "Production monitoring",
         "pytest",
@@ -267,6 +267,21 @@ export const site = {
       },
       image: "/projects/cold-outreach-pipeline.jpg",
       accent: "linear-gradient(135deg, #3d4a5c, #0a0a0c)",
+    },
+    {
+      title: "DocPilot",
+      group: "ai",
+      kind: "Enterprise RAG · self-built",
+      subtitle: "Permission-aware knowledge assistant over private documents",
+      bullets: [
+        "Hybrid retrieval rather than a plain vector lookup: query rewriting and decomposition, dense pgvector HNSW search in parallel with Postgres full-text search, Reciprocal Rank Fusion, cross-encoder reranking and small-to-big section expansion, then token-budgeted packing.",
+        "Tenant and ACL predicates are compiled into the retrieval SQL itself, backed by Postgres row-level security, so approximate nearest neighbour search can never return a chunk the asker is not allowed to read.",
+        "Every factual sentence carries a citation marker validated against real chunk ids, and invented markers are stripped and logged. When the corpus does not support an answer it returns INSUFFICIENT_EVIDENCE with what it searched and what to try next.",
+        "Golden question suites live in Git and run in CI: retrieval recall and nDCG, faithfulness, citation precision, abstention accuracy and over-abstention. A merge fails on an absolute floor breach or a two-point regression against baseline. 82 unit tests, including tenant isolation.",
+      ],
+      tech: ["Python", "FastAPI", "PostgreSQL + pgvector", "Claude", "Docker"],
+      links: { github: "https://github.com/Arslan9272/docpilot" },
+      accent: "linear-gradient(135deg, #3d5c52, #0a0a0c)",
     },
     {
       title: "Dukandar AI",
@@ -319,7 +334,7 @@ export const site = {
       subtitle: "B2B agency website on a serverless API",
       bullets: [
         "Figma design translated into a production single-page front end on Vite + React 18 + TypeScript with Tailwind design tokens and Framer Motion, backed by a FastAPI serverless API.",
-        "Vitest + React Testing Library + vitest-axe, a WCAG 2.1 AA pass and SEO work (meta/OG, JSON-LD, Core Web Vitals).",
+        "Vitest + React Testing Library + vitest-axe, a WCAG 2.1 AA pass and SEO work (meta and OG tags, JSON-LD, Core Web Vitals).",
       ],
       tech: ["React 18", "TypeScript", "Framer Motion", "FastAPI", "Vercel"],
       links: {
@@ -346,7 +361,7 @@ export const site = {
       title: "Admin Panel Backend",
       group: "company",
       kind: "Company project \u00b7 enterprise client",
-      subtitle: "Secure Django / DRF back office",
+      subtitle: "Secure Django and DRF back office",
       bullets: [
         "Secure REST APIs with Django and DRF: complex business logic via the ORM, CBVs and FBVs, and role-based access with Permissions and Groups.",
         "File uploads, automated email, unit tests and query optimisation.",
@@ -361,7 +376,7 @@ export const site = {
       kind: "Company project \u00b7 internal platform",
       subtitle: "Layered FastAPI service over MongoDB and MySQL",
       bullets: [
-        "Layered FastAPI service (routes / controllers / services / repositories) over MongoDB (Motor) and MySQL (aiomysql).",
+        "Layered FastAPI service (routes, controllers, services and repositories) over MongoDB (Motor) and MySQL (aiomysql).",
         "TOTP two-factor auth, transactional email, AWS S3 file handling and structured logging.",
       ],
       tech: ["FastAPI", "MongoDB", "MySQL", "AWS S3"],
@@ -375,7 +390,7 @@ export const site = {
       subtitle: "Layout and live-preview workspace for menu boards",
       bullets: [
         "Layout and live-preview workspace for data-driven menu boards rolled out by national restaurant chains, on an Express + WebSocket dev server.",
-        "Data-bound 1920\u00d71080 / 1080\u00d71920 boards joining layout HTML/CSS with Excel product data.",
+        "Data-bound 1920\u00d71080 and 1080\u00d71920 boards joining layout HTML and CSS with Excel product data.",
         "An agentic design-to-layout workflow over MCP: Atlassian (Jira), Figma and Chrome DevTools MCP servers connected so an agent reads the ticket, pulls geometry and assets from the design, generates the board and verifies it pixel-for-pixel in the browser. A multi-day manual build becomes a guided, reviewable pass.",
       ],
       tech: ["Node.js", "Express", "WebSocket", "MCP"],
@@ -387,11 +402,11 @@ export const site = {
   experience: [
     {
       period: "Jul 2024 – Present",
-      role: "Software Engineer (Full Stack / Python)",
+      role: "Software Engineer (Full Stack, Python)",
       org: "Intagleo Systems",
       location: "Lahore",
       roles: [
-        { role: "Software Engineer (Full Stack / Python)", period: "Jul 2025 – Present" },
+        { role: "Software Engineer (Full Stack, Python)", period: "Jul 2025 – Present" },
         { role: "Junior Software Engineer", period: "Jul 2024 – Jun 2025" },
       ],
       summary:
@@ -400,8 +415,8 @@ export const site = {
         "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines, MCP-connected tooling and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
         "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
         "Design and optimise data across PostgreSQL, MySQL and MongoDB, covering schema design, efficient queries, migrations and data integrity between systems.",
-        "Deliver full-stack features with React / Next.js front ends against FastAPI services, and real-time WebSocket features for live chat and notifications.",
-        "Automate internal engineering workflows (task routing, approvals, compliance reporting) in Python, and deliver in Agile teams with Git/GitHub code review, sprint planning and weekly client meetings.",
+        "Deliver full-stack features with React and Next.js front ends against FastAPI services, and real-time WebSocket features for live chat and notifications.",
+        "Automate internal engineering workflows (task routing, approvals, compliance reporting) in Python, and deliver in Agile teams with Git and GitHub code review, sprint planning and weekly client meetings.",
       ],
     },
     {
@@ -413,7 +428,7 @@ export const site = {
         "Delivered full-stack features on client web applications, from ticket through code review to deployment, in a small Agile team.",
       highlights: [
         "Python FastAPI and Django REST endpoints with React front ends.",
-        "MySQL / PostgreSQL schema changes, query tuning, bug triage and Git-based team workflows.",
+        "MySQL and PostgreSQL schema changes, query tuning, bug triage and Git-based team workflows.",
       ],
     },
     {

@@ -231,9 +231,9 @@ function ordinal(group: ProjectGroup) {
 
 /**
  * Projects, banded the way the CV reads: the self-built AI systems first as
- * full-width rows, then client delivery as a two-up grid, then the internal
- * company work folded behind a toggle so the section leads with the work
- * that is actually inspectable.
+ * a two-up grid (reading left to right, then down), then client delivery as
+ * a two-up grid, then the internal company work folded behind a toggle so
+ * the section leads with the work that is actually inspectable.
  */
 export function Projects({ index = "02" }: { index?: string }) {
   const [expanded, setExpanded] = useState(false);
@@ -251,20 +251,21 @@ export function Projects({ index = "02" }: { index?: string }) {
       <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
         <SectionHeader id="projects-heading" index={index} label="Projects" />
 
-        {/* AI systems, the headline work, one full-width row each */}
+        {/* AI systems, the headline work, two per row */}
         <BandHeader label={aiBand.label} note={aiBand.note} />
         <motion.div
           variants={list}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="flex flex-col gap-5 md:gap-6"
+          className="grid gap-5 md:gap-6 lg:grid-cols-2"
         >
           {ai.map((project, position) => (
             <ProjectCard
               key={project.title}
               project={project}
               index={position}
+              variant="compact"
             />
           ))}
         </motion.div>
