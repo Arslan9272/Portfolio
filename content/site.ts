@@ -47,10 +47,10 @@ export const site = {
   role: "Full Stack AI Engineer",
   tagline: "I build LLM products end to end, from the database to the browser.",
   intro:
-    "Full Stack AI Engineer with 2+ years of professional experience. I build LLM-powered products end to end, from the Python and FastAPI services and the data models underneath, up to the React 19 and TypeScript interfaces I design and ship myself.",
+    "Full Stack AI Engineer with 3 years of professional experience. I build LLM-powered products end to end, from the Python and FastAPI services and the data models underneath, up to the React 19 and TypeScript interfaces I design and ship myself.",
 
   stats: [
-    { value: "2+", label: "Years professional" },
+    { value: "3", label: "Years professional" },
     { value: "9", label: "Shipped projects" },
     { value: "Full stack", label: "Python · React · LLM" },
     { value: "30 days", label: "Notice period" },
@@ -123,7 +123,8 @@ export const site = {
         "Tool / function calling",
         "LangGraph",
         "LangChain",
-        "MCP",
+        "MCP (Model Context Protocol)",
+        "MCP tool integrations",
         "Agent memory",
         "Multi-agent orchestration",
         "Human-in-the-loop",
@@ -374,8 +375,9 @@ export const site = {
       bullets: [
         "Layout and live-preview workspace for data-driven menu boards rolled out by national restaurant chains, on an Express + WebSocket dev server.",
         "Data-bound 1920\u00d71080 / 1080\u00d71920 boards joining layout HTML/CSS with Excel product data.",
+        "An agentic design-to-layout workflow over MCP: Atlassian (Jira), Figma and Chrome DevTools MCP servers connected so an agent reads the ticket, pulls geometry and assets from the design, generates the board and verifies it pixel-for-pixel in the browser. A multi-day manual build becomes a guided, reviewable pass.",
       ],
-      tech: ["Node.js", "Express", "WebSocket"],
+      tech: ["Node.js", "Express", "WebSocket", "MCP"],
       linkNote: "Internal system, not public",
       accent: "linear-gradient(135deg, #5c3d4a, #0a0a0c)",
     },
@@ -388,7 +390,7 @@ export const site = {
       org: "Intagleo Systems",
       location: "Lahore",
       highlights: [
-        "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
+        "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines, MCP-connected tooling and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
         "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
         "Design and optimise data across PostgreSQL, MySQL and MongoDB, covering schema design, efficient queries, migrations and data integrity between systems.",
         "Deliver full-stack features with React / Next.js front ends against FastAPI services, and real-time WebSocket features for live chat and notifications.",
