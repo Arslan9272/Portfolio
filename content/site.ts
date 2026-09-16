@@ -106,6 +106,7 @@ export const site = {
       skills: [
         "Anthropic Claude API",
         "OpenAI API",
+        "Hugging Face",
         "LLM integration",
         "Prompt engineering & versioning",
         "Structured outputs",
@@ -125,6 +126,8 @@ export const site = {
         "LangChain",
         "MCP (Model Context Protocol)",
         "MCP tool integrations",
+        "Claude Code",
+        "OpenAI Codex",
         "Agent memory",
         "Multi-agent orchestration",
         "Human-in-the-loop",
