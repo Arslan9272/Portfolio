@@ -18,7 +18,6 @@ export type ExperienceEntry = {
   role: string;
   org: string;
   location?: string;
-  roles?: { role: string; period: string }[]; // progression within the org, most recent first
   summary?: string;
   highlights: string[];
 };
@@ -405,12 +404,6 @@ export const site = {
       role: "Software Engineer (Full Stack, Python)",
       org: "Intagleo Systems",
       location: "Lahore",
-      roles: [
-        { role: "Software Engineer (Full Stack, Python)", period: "Jul 2025 – Present" },
-        { role: "Junior Software Engineer", period: "Jul 2024 – Jun 2025" },
-      ],
-      summary:
-        "Joined as a Junior Software Engineer and was promoted to Software Engineer after twelve months.",
       highlights: [
         "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines, MCP-connected tooling and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
         "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
