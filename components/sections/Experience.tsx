@@ -68,6 +68,37 @@ export function Experience({ index = "03" }: { index?: string }) {
                         {entry.location}
                       </p>
                     )}
+                    {entry.roles && entry.roles.length > 1 && (
+                      <ol className="mt-4 space-y-1.5">
+                        {entry.roles.map((step, stepIndex) => (
+                          <li
+                            key={step.period}
+                            className="flex flex-wrap items-baseline gap-x-3 text-sm"
+                          >
+                            <span
+                              aria-hidden
+                              className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                                stepIndex === 0
+                                  ? "bg-[var(--fg)] shadow-[0_0_8px_var(--glow)]"
+                                  : "bg-[var(--fg-faint)]"
+                              }`}
+                            />
+                            <span
+                              className={
+                                stepIndex === 0
+                                  ? "text-[var(--fg)]"
+                                  : "text-[var(--fg-muted)]"
+                              }
+                            >
+                              {step.role}
+                            </span>
+                            <span className="font-mono text-[0.6875rem] tracking-[0.15em] text-[var(--fg-faint)]">
+                              {step.period}
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    )}
                     {entry.summary && (
                       <p className="mt-3 text-sm leading-[1.75] text-[var(--fg-muted)]">
                         {entry.summary}

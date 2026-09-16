@@ -18,6 +18,7 @@ export type ExperienceEntry = {
   role: string;
   org: string;
   location?: string;
+  roles?: { role: string; period: string }[]; // progression within the org, most recent first
   summary?: string;
   highlights: string[];
 };
@@ -389,6 +390,12 @@ export const site = {
       role: "Software Engineer (Full Stack / Python)",
       org: "Intagleo Systems",
       location: "Lahore",
+      roles: [
+        { role: "Software Engineer (Full Stack / Python)", period: "Jul 2025 – Present" },
+        { role: "Junior Software Engineer", period: "Jul 2024 – Jun 2025" },
+      ],
+      summary:
+        "Joined as a Junior Software Engineer and was promoted to Software Engineer after twelve months.",
       highlights: [
         "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines, MCP-connected tooling and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
         "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
@@ -398,21 +405,24 @@ export const site = {
       ],
     },
     {
-      period: "Jun 2023 – Aug 2023",
+      period: "Jul 2023 – Jun 2024",
+      role: "Associate Software Engineer",
+      org: "Devsloop",
+      location: "Lahore",
+      summary:
+        "Delivered full-stack features on client web applications, from ticket through code review to deployment, in a small Agile team.",
+      highlights: [
+        "Python FastAPI and Django REST endpoints with React front ends.",
+        "MySQL / PostgreSQL schema changes, query tuning, bug triage and Git-based team workflows.",
+      ],
+    },
+    {
+      period: "Jan 2023 – Jun 2023",
       role: "Software Developer Intern",
       org: "Wisdom Software House",
       location: "Lahore",
       summary:
-        "Built full-stack web applications with a Python FastAPI backend and optimised MySQL queries for performance.",
-      highlights: [],
-    },
-    {
-      period: "Dec 2022 – Jan 2023",
-      role: "Software Developer Intern",
-      org: "Devsloop",
-      location: "Lahore",
-      summary:
-        "Web development fundamentals, version control, debugging and team workflows.",
+        "Six-month internship building full-stack web applications with a Python FastAPI backend and React front end, and optimising MySQL queries for performance.",
       highlights: [],
     },
   ] satisfies ExperienceEntry[],
