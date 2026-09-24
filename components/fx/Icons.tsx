@@ -143,3 +143,260 @@ export function MoonIcon({ className = "h-4 w-4" }: IconProps) {
     </svg>
   );
 }
+
+export function CheckCircleIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="8" cy="8" r="6.25" />
+      <path d="m5.5 8 1.75 1.75L10.5 6.25" />
+    </svg>
+  );
+}
+
+export function CpuIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="3.5" y="3.5" width="9" height="9" rx="1.5" />
+      <rect x="6" y="6" width="4" height="4" rx="0.75" />
+      <path d="M6 1.5v2M10 1.5v2M6 12.5v2M10 12.5v2M1.5 6h2M1.5 10h2M12.5 6h2M12.5 10h2" />
+    </svg>
+  );
+}
+
+export function QuoteIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M3.5 3.5A2.5 2.5 0 0 0 1 6v1.5A1.5 1.5 0 0 0 2.5 9H4a.5.5 0 0 1 .5.5v.25A2.25 2.25 0 0 1 2.25 12a.75.75 0 0 0 0 1.5A3.75 3.75 0 0 0 6 9.75V6a2.5 2.5 0 0 0-2.5-2.5Zm7 0A2.5 2.5 0 0 0 8 6v1.5A1.5 1.5 0 0 0 9.5 9H11a.5.5 0 0 1 .5.5v.25A2.25 2.25 0 0 1 9.25 12a.75.75 0 0 0 0 1.5A3.75 3.75 0 0 0 13 9.75V6a2.5 2.5 0 0 0-2.5-2.5Z" />
+    </svg>
+  );
+}
+
+export function ArrowLeftIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M13 8H3m0 0 4-4M3 8l4 4" />
+    </svg>
+  );
+}
+
+export function ArrowRightIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 8h10m0 0-4-4m4 4-4 4" />
+    </svg>
+  );
+}
+
+export function ArrowUpIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M8 13V3m0 0L4 7m4-4 4 4" />
+    </svg>
+  );
+}
+
+export function ExternalLinkIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M9.5 2.5h4v4M13.5 2.5 7.5 8.5M6.5 3.5h-2a1.5 1.5 0 0 0-1.5 1.5v6.5A1.5 1.5 0 0 0 4.5 13H11a1.5 1.5 0 0 0 1.5-1.5v-2" />
+    </svg>
+  );
+}
+
+export function MapPinIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M8 14.5s-4.5-4.1-4.5-7.75a4.5 4.5 0 0 1 9 0C12.5 10.4 8 14.5 8 14.5Z" />
+      <circle cx="8" cy="6.75" r="1.75" />
+    </svg>
+  );
+}
+
+export function GraduationCapIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="m1.5 6 6.5-3 6.5 3-6.5 3-6.5-3Z" />
+      <path d="M4.25 7.25v3.25c0 1 1.7 2 3.75 2s3.75-1 3.75-2V7.25M14.5 6v3.5" />
+    </svg>
+  );
+}
+
+export function AwardIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="8" cy="6" r="4" />
+      <path d="m5.5 9.25-1 5.25L8 12.75l3.5 1.75-1-5.25" />
+    </svg>
+  );
+}
+
+export function CodeIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="m5.5 4.5-4 3.5 4 3.5M10.5 4.5l4 3.5-4 3.5M9.25 2.5l-2.5 11" />
+    </svg>
+  );
+}
+
+export function CalendarIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="2" y="3" width="12" height="11" rx="1.5" />
+      <path d="M2 6.5h12M5.25 1.75v2.5M10.75 1.75v2.5" />
+    </svg>
+  );
+}
+
+export function BuildingIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="3" y="2" width="10" height="12" rx="1" />
+      <path d="M6 5h1M9 5h1M6 8h1M9 8h1M6.5 14v-2.5h3V14" />
+    </svg>
+  );
+}
+
+export function EyeIcon({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      aria-hidden
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8Z" />
+      <circle cx="8" cy="8" r="2" />
+    </svg>
+  );
+}

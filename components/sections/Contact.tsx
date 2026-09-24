@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import { Reveal } from "@/components/fx/Reveal";
+import { SectionGlow } from "@/components/fx/SectionGlow";
 import { MagneticButton } from "@/components/fx/MagneticButton";
 import { SectionHeader } from "./SectionHeader";
 import { ContactForm } from "./ContactForm";
@@ -12,7 +13,11 @@ import {
 } from "@/components/fx/Icons";
 
 const socialPill =
-  "glass inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]";
+  "inline-flex h-12 items-center gap-2.5 rounded-full border border-[var(--accent-border)] bg-[var(--accent-light)] px-6 text-sm font-semibold tracking-wide text-[var(--fg)] transition-[background-color,border-color,box-shadow] duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] hover:shadow-[var(--accent-shadow)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]";
+
+// Resume left the hero, so here it is the primary action of the row
+const primaryPill =
+  "accent-button inline-flex h-12 items-center gap-2.5 rounded-full px-6 text-sm font-bold tracking-wide transition-[box-shadow] duration-300 hover:shadow-[var(--accent-shadow-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]";
 
 /**
  * Contact, closing CTA. Chrome headline and the direct channels on the left,
@@ -20,32 +25,33 @@ const socialPill =
  */
 export function Contact({ index = "06" }: { index?: string }) {
   return (
-    <section id="contact" aria-labelledby="contact-heading">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-36">
-        <SectionHeader id="contact-heading" index={index} label="Get in touch" />
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="relative overflow-hidden border-t border-[var(--glass-border)]"
+    >
+      <SectionGlow side="left" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-36">
+        <SectionHeader
+          id="contact-heading"
+          index={index}
+          label="Get in touch"
+          title="Let's build"
+          emphasis="together"
+          lede={site.contactBlurb}
+          size="xl"
+        />
 
-        <Reveal delay={0.1}>
-          <p className="chrome-text-animated max-w-4xl font-display text-[clamp(2.25rem,7vw,4.5rem)] font-extrabold leading-[1.02] tracking-tight">
-            Let&rsquo;s build something.
-          </p>
-        </Reveal>
-
-        <Reveal delay={0.15}>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--fg-muted)]">
-            {site.contactBlurb}
-          </p>
-        </Reveal>
-
-        <div className="mt-12 grid gap-10 md:mt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14">
           <div>
             <Reveal delay={0.2}>
               <MagneticButton
                 href={`mailto:${site.email}`}
-                className="group relative inline-flex max-w-full items-center gap-3 py-2 font-display text-lg font-light tracking-tight text-[var(--fg)] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-[var(--glass-border)] after:transition-[background-color] after:duration-300 hover:after:bg-[var(--border-strong)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:text-2xl"
+                className="group relative inline-flex max-w-full items-center gap-3 py-2 font-display text-lg font-light tracking-tight text-[var(--fg)] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:bg-[var(--accent-border)] after:transition-[background-color] after:duration-300 hover:text-[var(--accent-deep)] hover:after:bg-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:text-2xl"
               >
-                <MailIcon className="h-5 w-5 shrink-0 text-[var(--fg-muted)]" />
+                <MailIcon className="h-5 w-5 shrink-0 text-[var(--accent)]" />
                 <span className="[overflow-wrap:anywhere]">{site.email}</span>
-                <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-[var(--fg-muted)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRightIcon className="h-4 w-4 shrink-0 text-[var(--accent)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </MagneticButton>
             </Reveal>
 
@@ -73,7 +79,7 @@ export function Contact({ index = "06" }: { index?: string }) {
                   href={site.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={socialPill}
+                  className={primaryPill}
                 >
                   <ArrowUpRightIcon className="h-4 w-4" />
                   Resume
@@ -111,13 +117,13 @@ export function Contact({ index = "06" }: { index?: string }) {
                 ].map((row) => (
                   <div key={row.term}>
                     <dt className="flex items-center gap-2 text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
-                      {row.icon}
+                      <span className="text-[var(--accent)]">{row.icon}</span>
                       {row.term}
                     </dt>
                     <dd className="mt-2">
                       <a
                         href={row.href}
-                        className="text-sm text-[var(--fg-muted)] transition-colors duration-300 [overflow-wrap:anywhere] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                        className="text-sm font-medium text-[var(--fg)] underline decoration-[var(--accent-border)] underline-offset-4 transition-colors duration-300 [overflow-wrap:anywhere] hover:text-[var(--accent-deep)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
                       >
                         {row.value}
                       </a>

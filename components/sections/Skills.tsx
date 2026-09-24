@@ -1,88 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { site } from "@/content/site";
+import { SectionGlow } from "@/components/fx/SectionGlow";
+import { Reveal } from "@/components/fx/Reveal";
 import { SectionHeader } from "./SectionHeader";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const cardList = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
+const FOCUS =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
 
-const card = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-};
+const groups = site.skillGroups;
 
-const chipList = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.045, delayChildren: 0.2 } },
-};
-
-const chip = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-} as const;
+const MOBILE_VISIBLE = 4;
 
 /**
- * Skills, three frosted-glass group cards, each holding a staggered
- * cloud of glass chips. Cards lift slightly and brighten on hover.
+ * Skills, a filterable two-up grid of category cards. Each card carries
+ * the category name and a cloud of violet chips; an odd card out on the
+ * last row is centred. The filter bar
+ * narrows to one category; "All" lays the whole toolkit out.
  */
 export function Skills({ index = "01" }: { index?: string }) {
+  const [filter, setFilter] = useState<string>("all");
+  // Phones start with the first few areas; the full toolkit is one tap away
+  const [showAllMobile, setShowAllMobile] = useState(false);
+  const mobileCollapsed = filter === "all" && !showAllMobile;
+
+  const visible =
+    filter === "all" ? groups : groups.filter((group) => group.label === filter);
+
   return (
-    <section id="skills" aria-labelledby="skills-heading">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeader id="skills-heading" index={index} label="Skills" />
+    <section
+      id="skills"
+      aria-labelledby="skills-heading"
+      className="relative overflow-hidden border-t border-[var(--glass-border)]"
+    >
+      <SectionGlow side="right" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <SectionHeader
+          id="skills-heading"
+          index={index}
+          label="Expertise & competencies"
+          title="Technical"
+          emphasis="arsenal & core skills"
+          lede={site.skillsLede}
+        />
 
-        <motion.div
-          variants={cardList}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid gap-5 md:grid-cols-3 md:gap-6"
-        >
-          {site.skillGroups.map((group, groupIndex) => (
-            <motion.article
-              key={group.label}
-              variants={card}
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 320, damping: 24 }}
-              className="glass-card p-6 transition-[border-color,background-color,box-shadow] duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] hover:shadow-[inset_0_1px_0_var(--inset-highlight-strong),var(--card-shadow-hover),0_0_32px_var(--glow)] md:p-7"
-            >
-              <header className="flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-lg font-semibold tracking-tight">
-                  {group.label}
-                </h3>
-                <span
-                  aria-hidden
-                  className="font-mono text-[0.6875rem] tracking-[0.2em] text-[var(--fg-faint)]"
+        <Reveal delay={0.15}>
+          <div
+            role="group"
+            aria-label="Filter skills"
+            className="mb-8 flex gap-2 overflow-x-auto rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-wash)] p-2 [scrollbar-width:none] lg:flex-wrap"
+          >
+            {[{ label: "All" }, ...groups].map((group) => {
+              const id = group.label === "All" ? "all" : group.label;
+              const active = filter === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => setFilter(id)}
+                  className={`shrink-0 whitespace-nowrap rounded-xl px-4 py-1.5 text-xs font-semibold transition-[background-color,color,box-shadow] duration-300 ${FOCUS} ${
+                    active
+                      ? "accent-button"
+                      : "text-[var(--fg-muted)] hover:bg-[var(--bg-elevated)] hover:text-[var(--fg)]"
+                  }`}
                 >
-                  {String(groupIndex + 1).padStart(2, "0")}
-                </span>
-              </header>
+                  {group.label}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
 
-              <div
-                aria-hidden
-                className="mt-4 h-px bg-gradient-to-r from-[var(--glass-border)] to-transparent"
-              />
+        <Reveal delay={0.2}>
+          <motion.div layout className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <AnimatePresence mode="popLayout" initial={false}>
+              {visible.map((group, position) => {
+                // An odd card out on the last row sits centred, not flush left
+                const loneLast =
+                  visible.length % 2 === 1 && position === visible.length - 1;
+                return (
+                  <motion.article
+                    key={group.label}
+                    layout
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                    className={`${
+                      mobileCollapsed && position >= MOBILE_VISIBLE ? "max-md:hidden" : ""
+                    } rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-elevated)] p-6 shadow-[var(--card-shadow)] transition-[border-color,box-shadow] duration-300 hover:border-[var(--accent-border)] hover:shadow-[var(--card-shadow-hover)] ${
+                      loneLast && visible.length > 1
+                        ? "md:col-span-2 md:mx-auto md:w-[calc(50%-0.75rem)]"
+                        : ""
+                    }`}
+                  >
+                    <h3 className="mb-5 font-display text-lg font-bold tracking-tight text-[var(--fg)]">
+                      {group.label}
+                    </h3>
+                    <ul className="flex flex-wrap gap-2">
+                      {group.skills.map((skill) => (
+                        <li key={skill}>
+                          <span className="inline-flex items-center rounded-xl border border-[var(--accent-border)] bg-[var(--accent-light)] px-3 py-1.5 text-xs font-medium text-white transition-colors duration-300 hover:bg-[var(--accent-soft)] hover:border-[var(--accent)]">
+                            {skill}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.article>
+                );
+              })}
+            </AnimatePresence>
+          </motion.div>
+        </Reveal>
 
-              <motion.ul
-                variants={chipList}
-                className="mt-5 flex flex-wrap gap-2"
-              >
-                {group.skills.map((skill) => (
-                  <motion.li key={skill} variants={chip}>
-                    <span className="inline-flex items-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-fill)] px-3.5 py-1.5 text-[0.8125rem] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:text-[var(--fg)]">
-                      {skill}
-                    </span>
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.article>
-          ))}
-        </motion.div>
+        {mobileCollapsed && groups.length > MOBILE_VISIBLE && (
+          <div className="mt-8 flex justify-center md:hidden">
+            <button
+              type="button"
+              onClick={() => setShowAllMobile(true)}
+              className={`inline-flex h-12 items-center gap-2 rounded-xl border border-[var(--accent-border)] bg-[var(--accent-light)] px-6 text-sm font-bold text-[var(--fg)] ${FOCUS}`}
+            >
+              Show all {groups.length} skill areas
+              <span aria-hidden className="text-[var(--accent)]">
+                ↓
+              </span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

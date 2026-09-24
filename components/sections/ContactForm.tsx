@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 type Status = "idle" | "sending" | "sent" | "error";
 
 const fieldClass =
-  "w-full rounded-xl border border-[var(--glass-border)] bg-[var(--glass-fill)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-[border-color,background-color] duration-300 placeholder:text-[var(--fg-faint)] hover:border-[var(--border-strong)] focus:border-[var(--border-strong)] focus:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
+  "w-full rounded-xl border border-[var(--glass-border)] bg-[var(--glass-fill)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition-[border-color,background-color] duration-300 placeholder:text-[var(--fg-faint)] hover:border-[var(--border-strong)] focus:border-[var(--accent-border)] focus:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
 
 const labelClass =
   "block text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]";
@@ -92,7 +92,7 @@ export function ContactForm() {
             required
             maxLength={120}
             autoComplete="name"
-            placeholder="Arslan Tabish"
+            placeholder="Your full name"
             className={`mt-2.5 ${fieldClass}`}
           />
         </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, Inter } from "next/font/google";
+import { Sora, Inter, Alex_Brush } from "next/font/google";
 import { SmoothScroll } from "@/components/fx/SmoothScroll";
 import "./globals.css";
 
@@ -13,9 +13,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const TITLE = "Muhammad Arslan Tabish | Full Stack AI Engineer";
+// Signature script for the name plate on the hero portrait. Single-weight face.
+const alexBrush = Alex_Brush({
+  variable: "--font-alex-brush",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const TITLE = "Muhammad Arslan Tabish | Full Stack Software Engineer";
 const DESCRIPTION =
-  "Full Stack AI Engineer in Lahore. I build LLM products end to end, from Python and FastAPI services and data models through to React 19 and TypeScript interfaces.";
+  "Full stack software engineer in Lahore with 3 years of experience and 30+ projects shipped. Python, FastAPI, PostgreSQL, React and TypeScript, and the AI features inside them.";
 
 const SITE_URL = "https://arslantabish.com";
 
@@ -38,14 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * Applies the stored theme while the browser parses the HTML, before first
- * paint, so a light-theme visitor never sees a dark flash. Dark is the
- * default and lives on bare :root, so we only ever add the light attribute.
- * See node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
- */
-const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem("portfolio-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light");document.documentElement.style.colorScheme="light"}else{document.documentElement.style.colorScheme="dark"}}catch(e){}})()`;
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -54,12 +53,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sora.variable} ${inter.variable}`}
-      suppressHydrationWarning
+      className={`${sora.variable} ${inter.variable} ${alexBrush.variable}`}
+      data-theme="dark"
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      </head>
       <body className="min-h-screen antialiased">
         <SmoothScroll>{children}</SmoothScroll>
       </body>

@@ -1,345 +1,411 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { site, type Project, type ProjectGroup } from "@/content/site";
+import { Reveal } from "@/components/fx/Reveal";
+import { SectionGlow } from "@/components/fx/SectionGlow";
 import { SectionHeader } from "./SectionHeader";
 import { ArrowUpRightIcon, GitHubIcon } from "@/components/fx/Icons";
 
 // Widen from the narrowly-inferred content literal so optional fields
-// (links, linkNote, accent) type-check regardless of which entries use them.
+// (links, linkNote, featured, accent) type-check regardless of which entries use them.
 const projects: Project[] = site.projects;
 const groups = site.projectGroups;
 
+type Filter = "all" | ProjectGroup;
+
+const TABS: { id: Filter; label: string }[] = [
+  { id: "all", label: "All" },
+  ...groups.map((group) => ({ id: group.id, label: group.label })),
+];
+
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+const FOCUS =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
 
 const FALLBACK_ACCENT = "linear-gradient(135deg, #3a3d44, #0a0a0c)";
 
-const list = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
+function hostname(url: string) {
+  try {
+    return new URL(url).host;
+  } catch {
+    return url;
+  }
+}
 
-const card = {
-  hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
-};
+/**
+ * Browser-window mock around the project's screenshot: traffic lights, an
+ * address bar showing the live host, and a viewport cut to the screenshots'
+ * own aspect ratio (1400x730 captures) so nothing is cropped or left empty.
+ * Projects with no screenshot get the same frame around their accent plate.
+ */
+function BrowserFrame({ project, index }: { project: Project; index: number }) {
+  // Live projects show their host; everything else leaves the address bar
+  // empty and lets the image speak for itself.
+  const address = project.links?.live ? hostname(project.links.live) : "";
 
-function LinkButton({
-  href,
-  label,
-  icon,
-}: {
-  href: string;
-  label: string;
-  icon?: React.ReactNode;
-}) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="glass group/link inline-flex h-10 items-center gap-2 rounded-full px-5 text-[0.8125rem] font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
-    >
-      {icon}
-      {label}
-      <ArrowUpRightIcon className="h-3.5 w-3.5 text-[var(--fg-muted)] transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
-    </a>
+    <div className="group/frame relative mb-6 overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--frame-bg)] shadow-xs">
+      <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-[var(--frame-bar)] px-3.5 py-2.5">
+        <div aria-hidden className="flex shrink-0 items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+        </div>
+        <div className="min-h-[22px] min-w-0 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-center font-mono text-[10px] text-white/40 sm:mx-auto sm:max-w-xs">
+          {address}
+        </div>
+        <span aria-hidden className="w-[46px] shrink-0" />
+      </div>
+
+      <div className="relative aspect-[1400/730] w-full overflow-hidden bg-[var(--frame-viewport)]">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={`${project.title} interface`}
+            fill
+            sizes="(min-width: 1024px) 34rem, 100vw"
+            className="object-cover object-top transition-transform duration-700 ease-out group-hover/frame:scale-[1.04]"
+          />
+        ) : (
+          <div
+            aria-hidden
+            className="absolute inset-0"
+            style={{ background: project.accent ?? FALLBACK_ACCENT }}
+          >
+            {/* fine diagonal texture */}
+            <div className="absolute inset-0 bg-[repeating-linear-gradient(115deg,rgba(255,255,255,0.045)_0px,rgba(255,255,255,0.045)_1px,transparent_1px,transparent_10px)]" />
+            {/* index marker */}
+            <span className="absolute left-6 top-5 font-mono text-[0.6875rem] tracking-[0.25em] text-white/50">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            {/* chrome orb accent */}
+            <div
+              className="absolute bottom-6 right-6 h-12 w-12 rounded-full opacity-90 transition-transform duration-500 ease-out group-hover/frame:-translate-y-1 group-hover/frame:scale-110"
+              style={{
+                background:
+                  "radial-gradient(circle at 32% 30%, rgba(255,255,255,0.95) 0%, #c9cdd5 24%, #82858d 52%, #2c2e33 78%, #0d0e10 100%)",
+                boxShadow:
+                  "0 8px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(220, 225, 235, 0.14)",
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-full opacity-70 mix-blend-overlay"
+                style={{ background: project.accent ?? FALLBACK_ACCENT }}
+              />
+            </div>
+            <span className="absolute inset-x-0 bottom-6 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">
+              No public preview
+            </span>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const VISIBLE_BULLETS = 2;
+
+function Bullet({ text, as = "li" }: { text: string; as?: "li" | "div" }) {
+  const Tag = as;
+  return (
+    <Tag className="flex gap-2.5 text-[0.8125rem] leading-relaxed text-[var(--fg-muted)]">
+      <span
+        aria-hidden
+        className="mt-[0.5em] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-glow)]"
+      />
+      {text}
+    </Tag>
   );
 }
 
 function ProjectCard({
   project,
   index,
-  variant = "row",
+  delay = 0,
 }: {
   project: Project;
   index: number;
-  variant?: "row" | "compact";
+  delay?: number;
 }) {
-  const hasLinks = Boolean(project.links?.live || project.links?.github);
-  const isRow = variant === "row";
+  const groupLabel = groups.find((group) => group.id === project.group)?.label;
+  const live = project.links?.live;
+  const github = project.links?.github;
+  const hasLinks = Boolean(live || github);
+  // Two bullets carry the pitch; the rest wait behind "More detail" so the
+  // grid stays skimmable.
+  const [showAll, setShowAll] = useState(false);
+  const extra = project.bullets.slice(VISIBLE_BULLETS);
 
   return (
     <motion.article
-      variants={card}
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 300, damping: 26 }}
-      className={`glass-card group relative grid overflow-hidden transition-[border-color,box-shadow] duration-300 hover:border-[var(--border-strong)] hover:shadow-[inset_0_1px_0_var(--inset-highlight-strong),var(--card-shadow-hover),0_0_40px_var(--glow)] ${
-        isRow ? "lg:grid-cols-[minmax(0,19rem)_minmax(0,1fr)]" : "content-start"
-      }`}
+      layout
+      initial={{ opacity: 0, scale: 0.97 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.25, ease: EASE } }}
+      transition={{ duration: 0.5, ease: EASE, delay }}
+      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--glass-border)] bg-[var(--bg-elevated)] p-6 shadow-[var(--card-shadow)] transition-[border-color,box-shadow] duration-300 hover:border-[var(--accent-border)] hover:shadow-[var(--card-shadow-hover)] md:p-8"
     >
-      {/* Sheen sweep on hover */}
+      {/* Accent bar */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-10 -translate-x-full bg-[image:var(--sheen)] transition-transform duration-700 ease-out group-hover:translate-x-full"
+        className="absolute inset-x-0 top-0 h-1.5 bg-[image:var(--accent-fill)]"
       />
 
-      {/* Art panel, screenshot plate over a CSS gradient */}
-      <div
-        aria-hidden
-        className={`relative brightness-100 saturate-100 transition-[filter] duration-300 ease-out group-hover:brightness-[1.15] group-hover:saturate-150 ${
-          isRow ? "h-40 md:h-48 lg:h-full" : "h-32 md:h-40"
-        }`}
-        style={{ background: project.accent ?? FALLBACK_ACCENT }}
-      >
-        {project.image ? (
-          isRow ? (
-            /* The row panel is tall and narrow, so a full-bleed crop would
-               show a meaningless sliver, so float the shot as a plate instead. */
-            <div className="absolute inset-0 flex items-center justify-center p-4 lg:p-5">
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-[var(--glass-border)] shadow-[var(--plate-shadow)] transition-transform duration-500 ease-out group-hover:scale-[1.03]">
-                <Image
-                  src={project.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 18rem, 90vw"
-                  className="object-cover object-top"
-                />
-              </div>
-            </div>
-          ) : (
-            <Image
-              src={project.image}
-              alt=""
-              fill
-              sizes="(min-width: 768px) 34rem, 100vw"
-              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-            />
-          )
-        ) : (
-          /* fine diagonal texture */
-          <div className="absolute inset-0 bg-[repeating-linear-gradient(115deg,rgba(255,255,255,0.045)_0px,rgba(255,255,255,0.045)_1px,transparent_1px,transparent_10px)]" />
-        )}
-        {/* blend into the glass body */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-t from-[var(--panel-scrim)] via-transparent to-[rgba(255,255,255,0.04)] ${
-            isRow
-              ? "lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-[var(--panel-scrim)]"
-              : ""
-          }`}
-        />
-        {/* index marker */}
-        <span className="absolute left-6 top-5 font-mono text-[0.6875rem] tracking-[0.25em] text-white/50">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        {/* chrome orb accent, only where there is no screenshot to show */}
-        {!project.image && (
-          <div
-            className={`absolute bottom-5 right-6 h-10 w-10 rounded-full opacity-90 transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-110 ${
-              isRow ? "lg:bottom-6 lg:left-6 lg:right-auto" : ""
-            }`}
-            style={{
-              background:
-                "radial-gradient(circle at 32% 30%, rgba(255,255,255,0.95) 0%, #c9cdd5 24%, #82858d 52%, #2c2e33 78%, #0d0e10 100%)",
-              boxShadow:
-                "0 8px 22px rgba(0, 0, 0, 0.5), 0 0 16px rgba(220, 225, 235, 0.14)",
-            }}
-          >
-            <div
-              className="absolute inset-0 rounded-full mix-blend-overlay opacity-70"
-              style={{ background: project.accent ?? FALLBACK_ACCENT }}
-            />
-          </div>
+      <div className="mb-5 flex items-center justify-between gap-3 pt-1">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          <span className="rounded-full border border-[var(--glass-border)] bg-[var(--accent-soft)] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[var(--accent-deep)]">
+            {project.kind}
+          </span>
+          {project.featured && (
+            <span className="rounded-full border border-[var(--featured-border)] bg-[var(--featured-bg)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--featured-fg)]">
+              ★ Featured
+            </span>
+          )}
+        </div>
+        {groupLabel && (
+          <span className="hidden shrink-0 font-mono text-[11px] font-medium text-[var(--fg-faint)] sm:block">
+            {groupLabel}
+          </span>
         )}
       </div>
 
-      {/* Body */}
-      <div
-        className={`flex flex-1 flex-col p-6 ${isRow ? "md:p-8" : "md:p-7"}`}
-      >
-        <span className="inline-flex w-fit items-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-fill)] px-3 py-1 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-[var(--fg-faint)]">
-          {project.kind}
-        </span>
-        <h3 className="mt-4 font-display text-xl font-semibold tracking-tight text-[var(--fg)] md:text-2xl">
+      <BrowserFrame project={project} index={index} />
+
+      <div className="pb-8">
+        <h3 className="font-display text-2xl font-extrabold tracking-tight text-[var(--fg)] transition-colors duration-300 group-hover:text-[var(--accent-deep)]">
           {project.title}
         </h3>
-        <p className="mt-2 text-sm text-[var(--fg-muted)] md:text-base">
-          {project.subtitle}
-        </p>
+        <p className="mt-2 text-sm text-[var(--fg-muted)]">{project.subtitle}</p>
 
-        <ul className="mt-6 space-y-3 border-t border-[var(--glass-border)] pt-6">
-          {project.bullets.map((bullet) => (
-            <li
-              key={bullet}
-              className="flex gap-3 text-sm leading-[1.75] text-[var(--fg-muted)]"
-            >
-              <span
-                aria-hidden
-                className="mt-[0.15em] shrink-0 font-mono text-[var(--fg-faint)]"
-              >
-                +
-              </span>
-              {bullet}
-            </li>
+        <ul className="mt-5 space-y-2.5">
+          {project.bullets.slice(0, VISIBLE_BULLETS).map((bullet) => (
+            <Bullet key={bullet} text={bullet} />
           ))}
+          <AnimatePresence initial={false}>
+            {showAll &&
+              extra.map((bullet) => (
+                <motion.li
+                  key={bullet}
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                  className="overflow-hidden"
+                >
+                  <Bullet as="div" text={bullet} />
+                </motion.li>
+              ))}
+          </AnimatePresence>
         </ul>
+        {extra.length > 0 && (
+          <button
+            type="button"
+            onClick={() => setShowAll((value) => !value)}
+            aria-expanded={showAll}
+            className={`mt-3 inline-flex items-center gap-1.5 rounded-lg text-xs font-bold text-[var(--accent-deep)] transition-colors duration-300 hover:text-[var(--accent-hover)] ${FOCUS}`}
+          >
+            {showAll ? "Less detail" : `More detail (${extra.length})`}
+            <span
+              aria-hidden
+              className={`inline-block transition-transform duration-300 ${showAll ? "rotate-180" : ""}`}
+            >
+              ↓
+            </span>
+          </button>
+        )}
 
-        <ul className="mt-6 flex flex-wrap gap-2">
+        <ul className="mt-6 flex flex-wrap gap-1.5">
           {project.tech.map((tech) => (
             <li key={tech}>
-              <span className="inline-flex items-center rounded-full border border-[var(--glass-border)] bg-[var(--glass-fill)] px-3 py-1 text-xs text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:text-[var(--fg)]">
+              <span className="inline-flex items-center rounded-lg border border-[var(--glass-border)] bg-[var(--accent-soft)] px-2.5 py-1 text-xs font-medium text-[var(--accent-deep)]">
                 {tech}
               </span>
             </li>
           ))}
         </ul>
+      </div>
 
-        {(hasLinks || project.linkNote) && (
-          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-[var(--glass-border)] pt-6">
-            {project.links?.live && (
-              <LinkButton href={project.links.live} label="Live site" />
-            )}
-            {project.links?.github && (
-              <LinkButton
-                href={project.links.github}
-                label="Code"
-                icon={<GitHubIcon className="h-3.5 w-3.5" />}
-              />
-            )}
-            {!hasLinks && project.linkNote && (
-              <p className="text-[0.8125rem] text-[var(--fg-faint)]">
-                {project.linkNote}
-              </p>
-            )}
-          </div>
+      <div className="mt-auto flex flex-col items-stretch justify-between gap-3 border-t border-[var(--glass-border)] pt-5 sm:flex-row sm:items-center">
+        {live && (
+          <a
+            href={live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`accent-button inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold transition-[transform,box-shadow] duration-300 hover:-translate-y-px hover:shadow-[var(--accent-shadow-hover)] ${FOCUS}`}
+          >
+            Live site
+            <ArrowUpRightIcon className="h-3.5 w-3.5" />
+          </a>
+        )}
+        {github && (
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center justify-center gap-1.5 rounded-xl border border-[var(--glass-border)] bg-[var(--accent-soft)] px-3.5 py-2.5 text-xs font-bold text-[var(--accent-deep)] transition-colors duration-300 hover:bg-[var(--accent-light)] sm:ml-auto ${FOCUS}`}
+          >
+            <GitHubIcon className="h-3.5 w-3.5" />
+            Code
+          </a>
+        )}
+        {!hasLinks && project.linkNote && (
+          <p className="text-xs text-[var(--fg-faint)]">{project.linkNote}</p>
         )}
       </div>
     </motion.article>
   );
 }
 
-function BandHeader({ label, note }: { label: string; note: string }) {
-  return (
-    <div className="mb-6 flex flex-col gap-1 md:mb-7">
-      <h3 className="font-display text-lg font-semibold tracking-tight text-[var(--fg)] md:text-xl">
-        {label}
-      </h3>
-      <p className="text-sm text-[var(--fg-muted)]">{note}</p>
-      <div
-        aria-hidden
-        className="mt-3 h-px bg-gradient-to-r from-[var(--glass-border)] to-transparent"
-      />
-    </div>
-  );
-}
-
-function ordinal(group: ProjectGroup) {
-  return projects.filter((project) => project.group === group);
-}
-
 /**
- * Projects, banded the way the CV reads: the self-built AI systems first as
- * a two-up grid (reading left to right, then down), then client delivery as
- * a two-up grid, then the internal company work folded behind a toggle so
- * the section leads with the work that is actually inspectable.
+ * Projects, a filterable two-up grid. Tabs map to the content groups (AI
+ * systems, client delivery, open source, company work); "All" shows
+ * everything in the order the content lists it, self-built AI systems
+ * first. Only the first four cards show until the reader expands the rest.
  */
-export function Projects({ index = "02" }: { index?: string }) {
+const COLLAPSED_COUNT = 4;
+
+export function Projects({ index = "03" }: { index?: string }) {
+  const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState(false);
 
-  const ai = ordinal("ai");
-  const client = ordinal("client");
-  const company = ordinal("company");
+  // The grid's height is animated to follow its content, so expanding or
+  // collapsing eases the rest of the page along instead of jumping.
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [gridHeight, setGridHeight] = useState<number | "auto">("auto");
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const observer = new ResizeObserver(() => setGridHeight(grid.offsetHeight));
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
 
-  const aiBand = groups.find((band) => band.id === "ai")!;
-  const clientBand = groups.find((band) => band.id === "client")!;
-  const companyBand = groups.find((band) => band.id === "company")!;
+  const toggleExpanded = () => {
+    // Collapsing from far down the list would strand the reader below the
+    // section, so bring the grid back into view first.
+    if (expanded) {
+      const top = gridRef.current?.getBoundingClientRect().top ?? 0;
+      if (top < 0) {
+        gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    setExpanded((value) => !value);
+  };
+
+  const matching =
+    filter === "all"
+      ? projects
+      : projects.filter((project) => project.group === filter);
+  const visible = expanded ? matching : matching.slice(0, COLLAPSED_COUNT);
+  const hidden = matching.length - visible.length;
+  const activeGroup = groups.find((group) => group.id === filter);
+
+  // A new filter starts collapsed again, so the section never opens at full
+  // height on a band the reader has not asked to see.
+  const selectFilter = (next: Filter) => {
+    setFilter(next);
+    setExpanded(false);
+  };
 
   return (
-    <section id="projects" aria-labelledby="projects-heading">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeader id="projects-heading" index={index} label="Projects" />
+    <section
+      id="projects"
+      aria-labelledby="projects-heading"
+      className="relative overflow-hidden border-t border-[var(--glass-border)]"
+    >
+      <SectionGlow side="left" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <SectionHeader
+          id="projects-heading"
+          index={index}
+          label="Interactive portfolio"
+          title="Featured"
+          emphasis="engineering projects"
+          lede={site.projectsLede}
+          size="xl"
+        />
 
-        {/* AI systems, the headline work, two per row */}
-        <BandHeader label={aiBand.label} note={aiBand.note} />
-        <motion.div
-          variants={list}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid gap-5 md:gap-6 lg:grid-cols-2"
-        >
-          {ai.map((project, position) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={position}
-              variant="compact"
-            />
-          ))}
-        </motion.div>
-
-        {/* Client delivery */}
-        <div className="mt-16 md:mt-20">
-          <BandHeader label={clientBand.label} note={clientBand.note} />
-          <motion.div
-            variants={list}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid gap-5 md:gap-6 lg:grid-cols-2"
+        <Reveal delay={0.15}>
+          <div
+            role="group"
+            aria-label="Filter projects"
+            className="flex items-center gap-2 overflow-x-auto pb-2"
           >
-            {client.map((project, position) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={ai.length + position}
-                variant="compact"
-              />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Company work, present but folded, since none of it is public */}
-        {company.length > 0 && (
-          <div className="mt-16 md:mt-20">
-            <BandHeader label={companyBand.label} note={companyBand.note} />
-
-            <AnimatePresence initial={false}>
-              {expanded && (
-                <motion.div
-                  key="company-projects"
-                  id="company-projects"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.5, ease: EASE }}
-                  className="overflow-hidden"
+            {TABS.map((tab) => {
+              const active = filter === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => selectFilter(tab.id)}
+                  className={`shrink-0 whitespace-nowrap rounded-xl px-5 py-2.5 text-xs font-bold transition-[background-color,color,border-color,box-shadow] duration-300 ${FOCUS} ${
+                    active
+                      ? "accent-button"
+                      : "border border-[var(--glass-border)] bg-[var(--bg-elevated)] text-[var(--fg-muted)] hover:border-[var(--accent-border)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent-deep)]"
+                  }`}
                 >
-                  <motion.div
-                    variants={list}
-                    initial="hidden"
-                    animate="visible"
-                    className="grid gap-5 md:gap-6 lg:grid-cols-2"
-                  >
-                    {company.map((project, position) => (
-                      <ProjectCard
-                        key={project.title}
-                        project={project}
-                        index={ai.length + client.length + position}
-                        variant="compact"
-                      />
-                    ))}
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-3 min-h-[1.5rem] text-sm text-[var(--fg-muted)]">
+            {activeGroup?.note ?? ""}
+          </p>
+        </Reveal>
 
-            <div className={expanded ? "mt-10 flex justify-center" : "flex justify-center"}>
+        <Reveal delay={0.2}>
+          <motion.div
+            // + the wrapper's vertical padding, which gives card shadows room
+            animate={{ height: gridHeight === "auto" ? "auto" : gridHeight + 32 }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="-mx-4 mt-4 overflow-hidden px-4 pb-4 pt-4"
+          >
+            <motion.div
+              ref={gridRef}
+              id="projects-grid"
+              layout
+              className="grid grid-cols-1 gap-8 lg:grid-cols-2"
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                {visible.map((project, position) => (
+                  <ProjectCard
+                    key={project.title}
+                    project={project}
+                    index={projects.indexOf(project)}
+                    delay={
+                      position >= COLLAPSED_COUNT
+                        ? (position - COLLAPSED_COUNT) * 0.07
+                        : 0
+                    }
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </motion.div>
+        </Reveal>
+
+        {matching.length > COLLAPSED_COUNT && (
+          <Reveal delay={0.1}>
+            <div className="mt-10 flex justify-center">
               <button
                 type="button"
-                onClick={() => setExpanded((value) => !value)}
+                onClick={toggleExpanded}
                 aria-expanded={expanded}
-                aria-controls="company-projects"
-                className="glass group inline-flex h-12 items-center gap-3 rounded-full px-8 text-sm font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                aria-controls="projects-grid"
+                className={`group inline-flex h-12 items-center gap-3 rounded-xl border border-[var(--glass-border)] bg-[var(--bg-elevated)] px-8 text-sm font-bold text-[var(--fg)] shadow-xs transition-[border-color,background-color,color] duration-300 hover:border-[var(--accent-border)] hover:bg-[var(--accent-soft)] hover:text-[var(--accent-deep)] ${FOCUS}`}
               >
                 {expanded
-                  ? "Hide company projects"
-                  : `Show ${company.length} company projects`}
+                  ? "Show fewer projects"
+                  : `Show ${hidden} more project${hidden === 1 ? "" : "s"}`}
                 <span
                   aria-hidden
-                  className={`inline-block text-[var(--fg-muted)] transition-transform duration-300 ${
+                  className={`inline-block text-[var(--accent)] transition-transform duration-300 ${
                     expanded ? "rotate-180" : "group-hover:translate-y-0.5"
                   }`}
                 >
@@ -347,7 +413,7 @@ export function Projects({ index = "02" }: { index?: string }) {
                 </span>
               </button>
             </div>
-          </div>
+          </Reveal>
         )}
       </div>
     </section>

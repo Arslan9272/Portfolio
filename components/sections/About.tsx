@@ -1,96 +1,151 @@
-import Image from "next/image";
-import { site } from "@/content/site";
+import { site, type Credential } from "@/content/site";
 import { Reveal } from "@/components/fx/Reveal";
+import { SectionGlow } from "@/components/fx/SectionGlow";
+import {
+  AwardIcon,
+  CheckCircleIcon,
+  CodeIcon,
+  GraduationCapIcon,
+} from "@/components/fx/Icons";
 import { SectionHeader } from "./SectionHeader";
 
+const headlineLead = site.aboutHeadline.endsWith(site.aboutHeadlineEmphasis)
+  ? site.aboutHeadline.slice(0, -site.aboutHeadlineEmphasis.length).trim()
+  : site.aboutHeadline;
+
+const degrees: Credential[] = site.credentials.filter(
+  (entry) => entry.kind === "Degree"
+);
+
+const CARD =
+  "rounded-2xl border border-[var(--glass-border)] bg-[var(--bg-elevated)] shadow-[var(--card-shadow)]";
+
 /**
- * About, deliberately short, because it sits after the work. One headline,
- * one sentence, the portrait, then a compact capability list and the quick
- * facts a recruiter scans for (location, availability, notice, languages).
+ * About. The story card on the left; on the right, Education as a short
+ * timeline and How I work with an availability status line. No portrait:
+ * the hero already carries the photo.
  */
-export function About({ index = "05" }: { index?: string }) {
+export function About({ index = "02" }: { index?: string }) {
+  const basedIn = site.aboutFacts.find((fact) => fact.label === "Based in");
+
   return (
-    <section id="about" aria-labelledby="about-heading">
-      <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <SectionHeader id="about-heading" index={index} label="About" />
+    <section
+      id="about"
+      aria-labelledby="about-heading"
+      className="relative overflow-hidden border-t border-[var(--glass-border)]"
+    >
+      <SectionGlow side="left" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6 py-24 md:py-32">
+        <SectionHeader
+          id="about-heading"
+          index={index}
+          label={`About ${site.name}`}
+          title={headlineLead}
+          emphasis={site.aboutHeadlineEmphasis}
+          className="mb-12 md:mb-16"
+        />
 
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,18rem)] lg:gap-16">
-          <div>
-            <Reveal>
-              <p className="font-display text-[clamp(1.75rem,4.5vw,2.75rem)] font-semibold leading-[1.1] tracking-tight text-[var(--fg)]">
-                {site.aboutHeadline}
-              </p>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          {/* Story + cards */}
+          <div className="contents">
+            <Reveal delay={0.1} className="lg:col-span-7">
+              <div className={`${CARD} flex h-full flex-col gap-5 p-8 md:p-10`}>
+                <h3 className="flex items-center gap-3 font-display text-2xl font-bold tracking-tight text-[var(--fg)]">
+                  <CodeIcon className="h-5 w-5 text-[var(--accent)]" />
+                  Building software end to end
+                </h3>
+                <p className="text-base leading-relaxed text-[var(--fg-muted)]">
+                  {site.aboutLede}
+                </p>
+                <p className="text-sm leading-relaxed text-[var(--fg-muted)] md:text-base">
+                  {site.aboutStory}
+                </p>
+                <dl className="mt-auto grid grid-cols-3 gap-4 border-t border-[var(--glass-border)] pt-6">
+                  {site.aboutStats.map((stat) => (
+                    <div key={stat.label}>
+                      <dt className="sr-only">{stat.label}</dt>
+                      <dd className="font-display text-3xl font-extrabold tracking-tight text-[var(--accent-deep)] md:text-4xl">
+                        {stat.value}
+                      </dd>
+                      <dd className="mt-1 text-xs leading-snug text-[var(--fg-muted)]">
+                        {stat.label}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <p className="mt-6 max-w-2xl font-display text-[1.35rem] font-light leading-[1.5] tracking-tight text-[var(--fg-muted)] md:mt-8 md:text-[1.6rem]">
-                {site.aboutLede}
-              </p>
-            </Reveal>
-
-            <div className="mt-12 grid gap-10 md:mt-14 md:grid-cols-2 md:gap-12">
-              {site.aboutGroups.map((group, groupIndex) => (
-                <Reveal key={group.label} delay={0.18 + groupIndex * 0.08}>
-                  <h3 className="eyebrow font-display font-semibold">
-                    {group.label}
-                  </h3>
-                  <div
-                    aria-hidden
-                    className="mt-4 h-px bg-gradient-to-r from-[var(--glass-border)] to-transparent"
-                  />
-                  <ul className="mt-5 space-y-4">
-                    {group.items.map((item) => (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+              <Reveal delay={0.15}>
+                <div className={`${CARD} h-full p-6`}>
+                  <h4 className="mb-4 flex items-center gap-2 font-display text-lg font-bold text-[var(--fg)]">
+                    <GraduationCapIcon className="h-5 w-5 text-[var(--accent)]" />
+                    Education
+                  </h4>
+                  <ol className="space-y-4">
+                    {degrees.map((entry) => (
                       <li
-                        key={item}
-                        className="flex gap-3 text-[0.9375rem] leading-[1.75] text-[var(--fg-muted)]"
+                        key={entry.title}
+                        className="relative border-l-2 border-[var(--glass-border)] pl-4"
                       >
                         <span
                           aria-hidden
-                          className="mt-[0.7em] h-px w-4 shrink-0 bg-[var(--fg-faint)]"
+                          className="absolute -left-[5px] top-1.5 h-2 w-2 rounded-full bg-[var(--accent-deep)]"
                         />
-                        {item}
+                        <p className="text-sm font-bold text-[var(--fg)]">
+                          {entry.title}
+                        </p>
+                        <p className="mt-0.5 text-xs text-[var(--fg-muted)]">
+                          {entry.org}
+                        </p>
+                        <p className="mt-1 font-mono text-xs font-medium text-[var(--accent)]">
+                          {entry.period}
+                        </p>
                       </li>
                     ))}
-                  </ul>
-                </Reveal>
-              ))}
-            </div>
+                  </ol>
+                </div>
+              </Reveal>
 
-            <Reveal delay={0.28}>
-              <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--glass-border)] pt-8 sm:grid-cols-4 md:mt-14">
-                {site.aboutFacts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-[var(--fg-faint)]">
-                      {fact.label}
-                    </dt>
-                    <dd className="mt-2 text-sm text-[var(--fg)]">
-                      {fact.value}
-                    </dd>
+              <Reveal delay={0.2}>
+                <div className={`${CARD} flex h-full flex-col justify-between p-6`}>
+                  <div>
+                    <h4 className="mb-4 flex items-center gap-2 font-display text-lg font-bold text-[var(--fg)]">
+                      <AwardIcon className="h-5 w-5 text-[var(--accent)]" />
+                      How I work
+                    </h4>
+                    <ul className="space-y-2.5 text-xs text-[var(--fg-muted)]">
+                      {basedIn && (
+                        <li className="flex items-center gap-2.5">
+                          <CheckCircleIcon className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                          <span>
+                            Based in{" "}
+                            <strong className="font-semibold text-[var(--fg)]">
+                              {basedIn.value}
+                            </strong>
+                          </span>
+                        </li>
+                      )}
+                      {site.aboutHighlights.map((item) => (
+                        <li key={item} className="flex items-center gap-2.5">
+                          <CheckCircleIcon className="h-4 w-4 shrink-0 text-[var(--accent)]" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))}
-              </dl>
-            </Reveal>
+                  <div className="mt-4 flex items-center justify-between gap-3 border-t border-[var(--glass-border)] pt-4 font-mono text-xs font-bold text-[var(--accent-deep)]">
+                    <span>Status: {site.aboutStatus}</span>
+                    <span
+                      aria-hidden
+                      className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-[var(--accent-deep)]"
+                    />
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
-
-          <Reveal delay={0.2} className="lg:pt-2">
-            <figure className="group relative mx-auto max-w-xs lg:max-w-none">
-              <div className="relative overflow-hidden rounded-2xl border border-[var(--glass-border)] shadow-[inset_0_1px_0_var(--inset-highlight),var(--card-shadow)]">
-                <Image
-                  src="/arslan-portrait.jpg"
-                  alt={`${site.fullName}, ${site.role}`}
-                  width={693}
-                  height={866}
-                  sizes="(min-width: 1024px) 18rem, (min-width: 640px) 20rem, 100vw"
-                  className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                />
-                {/* settle the frame into the page background */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--panel-scrim-soft)] via-transparent to-[var(--inset-highlight)]"
-                />
-              </div>
-            </figure>
-          </Reveal>
         </div>
       </div>
     </section>

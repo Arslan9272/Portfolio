@@ -3,147 +3,205 @@
 /* ---------------------------------------------------------------
    Theme tokens.
 
-   Dark is the default: bare :root carries the dark palette, so the
-   site renders dark even before the theme script runs. Light is an
-   explicit opt-in via [data-theme="light"] on <html>, set by the
-   inline script in app/layout.tsx before first paint.
+   Base (light) tokens; the dark theme below overrides them. Palette: lavender-white ground, white surfaces, and a
+   violet ramp as the single accent. Deep violet carries text and
+   buttons; pale lavender is what glows.
    --------------------------------------------------------------- */
 
 :root {
-  --bg: #050506;
-  --bg-elevated: #0a0a0c;
-  --fg: #ededed;
-  --fg-muted: #9a9aa2;
-  --fg-faint: #7a7a82;
+  --bg: #f8f6fc;
+  --bg-elevated: #ffffff;
+  --bg-wash: #f1ecf8;
+  --fg: #221f2e;
+  --fg-muted: #57526a;
+  --fg-faint: #7d778c;
 
-  --glass-fill: rgba(255, 255, 255, 0.05);
-  --glass-fill-hover: rgba(255, 255, 255, 0.09);
-  --glass-border: rgba(255, 255, 255, 0.13);
-  --border-strong: rgba(255, 255, 255, 0.3);
+  --glass-fill: rgba(255, 255, 255, 0.85);
+  --glass-fill-hover: #ffffff;
+  --glass-border: #e2dbec;
+  --border-strong: #b3a0de;
+
+  /* Graphite with a violet cast, a white-hot gradient is invisible on light */
+  --chrome-gradient: linear-gradient(
+    150deg,
+    #221f2e 0%,
+    #4a4460 18%,
+    #8b8698 34%,
+    #1f1c2b 50%,
+    #6b6580 64%,
+    #37334a 80%,
+    #1b1826 100%
+  );
+
+  /* Violet accent ramp, a notch deeper than the reference */
+  --accent: #5f42ad;
+  --accent-deep: #40266f;
+  --accent-hover: #331d5c;
+  --accent-soft: #f1ecf8;
+  --accent-light: #e3d9f2;
+  --accent-glow: #b3a0de;
+  --accent-border: #b3a0de;
+  --accent-fill: linear-gradient(135deg, #5f42ad 0%, #40266f 60%, #331d5c 100%);
+  --accent-text: linear-gradient(135deg, #40266f 0%, #5f42ad 40%, #6b4fc0 100%);
+  --on-accent: #ffffff;
+  --accent-shadow: 0 4px 14px rgba(64, 38, 111, 0.22);
+  --accent-shadow-hover: 0 8px 28px rgba(64, 38, 111, 0.32);
+  --glow: rgba(95, 66, 173, 0.16);
+
+  /* Soft light: hero blobs and drifting dots */
+  --blob-peach: rgba(227, 217, 242, 0.8);
+  --blob-rose: rgba(179, 160, 222, 0.32);
+  --blob-cream: rgba(241, 236, 248, 0.85);
+  --dot: rgba(179, 160, 222, 0.55);
+
+  /* Surfaces layered over the page: nav pill, mobile menu, image scrims */
+  --nav-scrim: rgba(255, 255, 255, 0.8);
+  --nav-scrim-solid: rgba(255, 255, 255, 0.92);
+  --nav-shadow:
+    0 20px 25px -5px rgba(64, 38, 111, 0.08),
+    0 8px 10px -6px rgba(64, 38, 111, 0.08);
+  --overlay-scrim: rgba(248, 246, 252, 0.96);
+  --panel-scrim: rgba(34, 31, 46, 0.8);
+  --panel-scrim-soft: rgba(34, 31, 46, 0.3);
+
+  --inset-highlight: rgba(255, 255, 255, 0.85);
+  --inset-highlight-strong: rgba(255, 255, 255, 0.95);
+  --card-shadow:
+    0 1px 2px rgba(34, 31, 46, 0.04),
+    0 8px 24px -12px rgba(64, 38, 111, 0.1);
+  --card-shadow-hover: 0 20px 40px rgba(64, 38, 111, 0.1);
+
+  --rule-bright: rgba(64, 38, 111, 0.45);
+
+  /* "Featured" flag on a project card */
+  --featured-fg: #8a5a00;
+  --featured-bg: #fff6db;
+  --featured-border: #f3dc9a;
+
+  /* Browser-window mock around project screenshots */
+  --frame-bg: #1a1822;
+  --frame-bar: #252331;
+  --frame-viewport: #0f0e17;
+
+  /* Footer ground */
+  --footer-bg: #181124;
+  --footer-glow: rgba(75, 46, 131, 0.28);
+
+  --selection-bg: rgba(64, 38, 111, 0.9);
+  --selection-fg: #ffffff;
+  --scrollbar-thumb: rgba(64, 38, 111, 0.2);
+  --scrollbar-thumb-hover: rgba(64, 38, 111, 0.35);
+
+  --focus-ring: #5f42ad;
+
+  /* Neural filament field behind the hero, tinted with the accent */
+  --hero-network-opacity: 0.3;
+}
+
+
+/* ---------------------------------------------------------------
+   Dark theme, the site's theme: layout.tsx sets data-theme="dark" on
+   <html>. The light tokens above remain as the base it overrides.
+
+   Ink ground with a violet undertone rather than pure black, so the
+   cards and glows have somewhere to sit. The violet ramp flips: text
+   and icons take the light end, buttons keep a saturated fill.
+   --------------------------------------------------------------- */
+
+/* Brand for the dark theme: one colour for text and icons, a fill pair for
+   buttons, and the ink that sits on that fill. Every accent token below is
+   derived from these, so changing the brand restyles the whole site. */
+:root[data-theme="dark"] {
+  --brand: #a78bfa;
+  --brand-fill: #7c5ce0;
+  --brand-fill-deep: #4a2f9e;
+  --brand-on: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  /* Near-black carrying a trace of the brand, so it never reads as flat #000 */
+  --bg: color-mix(in srgb, var(--brand) 3%, #0a0a0c);
+  --bg-elevated: color-mix(in srgb, var(--brand) 5%, #121216);
+  --bg-wash: color-mix(in srgb, var(--brand) 7%, #16161b);
+  --fg: #eeedf2;
+  --fg-muted: #a9a7b4;
+  --fg-faint: #8a8896;
+
+  --glass-fill: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  --glass-fill-hover: color-mix(in srgb, var(--brand) 7%, #16161b);
+  --glass-border: color-mix(in srgb, var(--brand) 12%, #232329);
+  --border-strong: color-mix(in srgb, var(--brand) 40%, #232329);
 
   --chrome-gradient: linear-gradient(
     150deg,
     #ffffff 0%,
-    #d3d6dd 18%,
-    #8b8e98 34%,
-    #f4f5f8 50%,
-    #71747e 64%,
-    #c9ccd4 80%,
-    #ffffff 100%
+    #c9c7d3 30%,
+    #8d8b98 50%,
+    #eeedf2 70%,
+    #a3a1ae 100%
   );
-  --glow: rgba(220, 225, 235, 0.16);
 
-  /* Surfaces layered over the page: nav bar, mobile menu, image scrims */
-  --nav-scrim: rgba(5, 5, 6, 0.62);
-  --overlay-scrim: rgba(5, 5, 6, 0.92);
-  --panel-scrim: rgba(5, 5, 6, 0.6);
-  --panel-scrim-soft: rgba(5, 5, 6, 0.42);
-
-  --inset-highlight: rgba(255, 255, 255, 0.12);
-  --inset-highlight-strong: rgba(255, 255, 255, 0.16);
-  --card-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
-  --card-shadow-hover: 0 30px 72px -18px rgba(0, 0, 0, 0.78);
-  --plate-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.85);
-
-  --sheen: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.07) 50%,
-    transparent 58%
-  );
-  --rule-bright: rgba(255, 255, 255, 0.4);
-
-  /* The hero filament plate is authored light-on-dark */
-  --hero-media-opacity: 0.3;
-  --hero-media-opacity-md: 0.45;
-  --hero-media-filter: none;
-  --hero-spotlight: rgba(220, 225, 235, 0.09);
-  --hero-bloom: rgba(190, 200, 220, 0.1);
-
-  --selection-bg: rgba(220, 225, 235, 0.9);
-  --selection-fg: #050506;
-  --scrollbar-thumb: rgba(255, 255, 255, 0.15);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.25);
-
-  --focus-ring: rgba(255, 255, 255, 0.7);
-  --on-accent: #08080a;
-  --accent-fill: linear-gradient(
+  --accent: var(--brand);
+  --accent-deep: color-mix(in srgb, var(--brand) 70%, #ffffff);
+  --accent-hover: color-mix(in srgb, var(--brand) 45%, #ffffff);
+  --accent-soft: color-mix(in srgb, var(--brand) 10%, transparent);
+  --accent-light: color-mix(in srgb, var(--brand) 18%, transparent);
+  --accent-glow: var(--brand-fill-deep);
+  --accent-border: color-mix(in srgb, var(--brand) 45%, transparent);
+  --accent-fill: linear-gradient(135deg, var(--brand-fill) 0%, var(--brand-fill-deep) 100%);
+  --accent-text: linear-gradient(
     135deg,
-    #f8f9fb 0%,
-    #d6d9df 45%,
-    #a6aab4 100%
+    color-mix(in srgb, var(--brand) 45%, #ffffff) 0%,
+    var(--brand) 55%,
+    color-mix(in srgb, var(--brand) 75%, var(--brand-fill-deep)) 100%
   );
-  --accent-shadow: 0 8px 32px rgba(220, 225, 235, 0.16);
-  --accent-shadow-hover: 0 10px 48px rgba(220, 225, 235, 0.3);
-}
+  --on-accent: var(--brand-on);
+  --accent-shadow: 0 4px 14px color-mix(in srgb, var(--brand-fill-deep) 35%, transparent);
+  --accent-shadow-hover: 0 8px 28px color-mix(in srgb, var(--brand-fill-deep) 45%, transparent);
+  --glow: color-mix(in srgb, var(--brand) 22%, transparent);
 
-:root[data-theme="light"] {
-  --bg: #f4f5f7;
-  --bg-elevated: #ffffff;
-  --fg: #14151a;
-  --fg-muted: #52545e;
-  --fg-faint: #7c7f8a;
+  --blob-peach: color-mix(in srgb, var(--brand-fill-deep) 22%, transparent);
+  --blob-rose: color-mix(in srgb, var(--brand) 12%, transparent);
+  --blob-cream: color-mix(in srgb, var(--brand-fill-deep) 14%, transparent);
+  --dot: color-mix(in srgb, var(--brand) 35%, transparent);
 
-  --glass-fill: rgba(255, 255, 255, 0.72);
-  --glass-fill-hover: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(18, 20, 28, 0.12);
-  --border-strong: rgba(18, 20, 28, 0.28);
+  --nav-scrim: rgba(16, 16, 20, 0.75);
+  --nav-scrim-solid: rgba(16, 16, 20, 0.92);
+  --nav-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.4),
+    0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --overlay-scrim: color-mix(in srgb, var(--bg) 96%, transparent);
 
-  /* Graphite, not silver — a white-hot gradient is invisible on light */
-  --chrome-gradient: linear-gradient(
-    150deg,
-    #2a2d35 0%,
-    #4c515c 18%,
-    #8d929d 34%,
-    #23262d 50%,
-    #6e737e 64%,
-    #3a3e47 80%,
-    #1b1d23 100%
-  );
-  --glow: rgba(40, 46, 60, 0.1);
+  --inset-highlight: rgba(255, 255, 255, 0.04);
+  --inset-highlight-strong: rgba(255, 255, 255, 0.06);
+  --card-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.5);
 
-  --nav-scrim: rgba(244, 245, 247, 0.75);
-  --overlay-scrim: rgba(244, 245, 247, 0.96);
-  --panel-scrim: rgba(20, 21, 26, 0.35);
-  --panel-scrim-soft: rgba(20, 21, 26, 0.18);
+  --rule-bright: color-mix(in srgb, var(--brand) 45%, transparent);
 
-  --inset-highlight: rgba(255, 255, 255, 0.85);
-  --inset-highlight-strong: rgba(255, 255, 255, 0.95);
-  --card-shadow: 0 18px 44px -22px rgba(20, 24, 38, 0.28);
-  --card-shadow-hover: 0 26px 60px -20px rgba(20, 24, 38, 0.34);
-  --plate-shadow: 0 14px 32px -12px rgba(20, 24, 38, 0.3);
+  --featured-fg: #fcd34d;
+  --featured-bg: rgba(252, 211, 77, 0.1);
+  --featured-border: rgba(252, 211, 77, 0.3);
 
-  --sheen: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.55) 50%,
-    transparent 58%
-  );
-  --rule-bright: rgba(18, 20, 28, 0.35);
+  --footer-bg: #07070a;
+  --footer-glow: color-mix(in srgb, var(--brand-fill-deep) 22%, transparent);
 
-  /* Flip the filament plate so light strokes read as dark ink */
-  --hero-media-opacity: 0.14;
-  --hero-media-opacity-md: 0.2;
-  --hero-media-filter: invert(1) hue-rotate(180deg);
-  --hero-spotlight: rgba(40, 46, 60, 0.07);
-  --hero-bloom: rgba(60, 70, 95, 0.08);
-
-  --selection-bg: rgba(20, 24, 38, 0.85);
+  --selection-bg: color-mix(in srgb, var(--brand) 40%, transparent);
   --selection-fg: #ffffff;
-  --scrollbar-thumb: rgba(18, 20, 28, 0.2);
-  --scrollbar-thumb-hover: rgba(18, 20, 28, 0.32);
+  --scrollbar-thumb: color-mix(in srgb, var(--brand) 25%, transparent);
+  --scrollbar-thumb-hover: color-mix(in srgb, var(--brand) 40%, transparent);
 
-  --focus-ring: rgba(20, 24, 38, 0.65);
-  --on-accent: #ffffff;
-  --accent-fill: linear-gradient(
-    135deg,
-    #33373f 0%,
-    #202329 45%,
-    #101216 100%
-  );
-  --accent-shadow: 0 8px 28px rgba(20, 24, 38, 0.2);
-  --accent-shadow-hover: 0 10px 40px rgba(20, 24, 38, 0.3);
+  --focus-ring: var(--brand);
+
+  --hero-network-opacity: 0.7;
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 
 @theme inline {
   --color-bg: var(--bg);
@@ -154,11 +212,19 @@
   --color-glass-fill: var(--glass-fill);
   --color-glass-border: var(--glass-border);
   --color-glass-fill-hover: var(--glass-fill-hover);
+  --color-accent: var(--accent);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-signature: var(--font-alex-brush), "Brush Script MT", cursive;
 }
 
-/* smooth scrolling handled by Lenis at runtime */
+/* Native scrolling. In-page #links glide; the offset keeps section
+   headings clear of the fixed nav. */
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
 
 body {
   background: var(--bg);
@@ -169,21 +235,21 @@ body {
 
 /* ---------- Utility classes ---------- */
 
+/* Translucent surface for buttons and chips. No backdrop blur: these sit
+   over the flat page background, so a blur has nothing to blur and only
+   costs frames while scrolling. Blur is reserved for the nav pill, the
+   mobile menu and the portrait name plate, which genuinely overlap content. */
 @utility glass {
   background: var(--glass-fill);
   border: 1px solid var(--glass-border);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
   border-radius: 1rem;
 }
 
-/* Frosted glass with real depth: inset top light + ambient drop shadow.
-   Use for content cards (Skills / Projects / Experience), NOT the Nav. */
+/* Content card with real depth: inset top light + ambient drop shadow.
+   Use for Skills / Experience / Credentials cards, NOT the Nav. */
 @utility glass-card {
   background: var(--glass-fill);
   border: 1px solid var(--glass-border);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
   border-radius: 1rem;
   box-shadow:
     inset 0 1px 0 var(--inset-highlight),
@@ -197,31 +263,12 @@ body {
   color: transparent;
 }
 
-@utility chrome-text-animated {
-  background-image: var(--chrome-gradient);
-  background-size: 200% auto;
+/* Violet gradient type, the emphasis half of a headline. */
+@utility accent-text {
+  background-image: var(--accent-text);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: chrome-shimmer 6s linear infinite;
-}
-
-/* Hero H1: layer a thin top inner light over the chrome so the type
-   catches light like the blob. Pairs with chrome-text-animated. */
-@utility chrome-h1-light {
-  -webkit-filter: drop-shadow(0 1px 0 var(--inset-highlight))
-    drop-shadow(0 2px 12px var(--glow));
-  filter: drop-shadow(0 1px 0 var(--inset-highlight))
-    drop-shadow(0 2px 12px var(--glow));
-}
-
-@keyframes chrome-shimmer {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
 }
 
 @utility eyebrow {
@@ -231,15 +278,59 @@ body {
   color: var(--fg-muted);
 }
 
-/* Solid pill used for primary actions (hero CTA, form submit). */
+/* Solid violet pill used for primary actions (hero CTA, nav Resume, form submit). */
 @utility accent-button {
   background: var(--accent-fill);
   color: var(--on-accent);
   box-shadow: var(--accent-shadow);
 }
 
+/* Neural filament field for the hero. The image is only a luminance mask,
+   so the lines take the accent colour in either theme, and a radial mask
+   fades them out before they reach the headline. */
+@utility hero-network {
+  background: var(--accent);
+  opacity: var(--hero-network-opacity);
+  -webkit-mask-image:
+    url("/hero-network.jpg"),
+    radial-gradient(ellipse 62% 72% at 72% 45%, #000 8%, transparent 76%);
+  mask-image:
+    url("/hero-network.jpg"),
+    radial-gradient(ellipse 62% 72% at 72% 45%, #000 8%, transparent 76%);
+  mask-mode: luminance, alpha;
+  -webkit-mask-size: cover, 100% 100%;
+  mask-size: cover, 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* ---------- Ambient motion ---------- */
+
+/* Hero dots: a slow, transform-only drift, so it stays on the compositor. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(var(--drift-x, 8px), var(--drift-y, -20px), 0);
+  }
+}
+
+@utility drift {
+  animation: drift var(--drift-duration, 10s) ease-in-out infinite;
+  animation-delay: var(--drift-delay, 0s);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .chrome-text-animated {
+  html {
+    scroll-behavior: auto;
+  }
+  .drift {
     animation: none;
   }
 }

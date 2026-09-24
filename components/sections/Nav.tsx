@@ -9,7 +9,6 @@ import {
   useScroll,
 } from "framer-motion";
 import { site } from "@/content/site";
-import { ThemeToggle } from "@/components/fx/ThemeToggle";
 import {
   ArrowUpRightIcon,
   GitHubIcon,
@@ -20,12 +19,18 @@ const LINKS = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
-  { label: "Education", href: "#education" },
   { label: "About", href: "#about" },
+  { label: "Certifications", href: "#certifications" },
   { label: "Contact", href: "#contact" },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+const FOCUS =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]";
+
+/* Round icon button shared by the theme toggle's neighbours. */
+const ICON_BUTTON = `glass items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--accent-border)] hover:bg-[var(--glass-fill-hover)] hover:text-[var(--fg)] ${FOCUS}`;
 
 const menuList = {
   hidden: {},
@@ -42,9 +47,12 @@ const menuItem = {
 };
 
 /**
- * Fixed top navigation. Transparent over the hero, frosted glass once the
- * page scrolls. Carries the theme switch and the résumé download on every
- * breakpoint; below lg the links collapse into a full-screen glass overlay.
+ * Fixed top navigation in three zones: brand on the left, the section
+ * links in a floating pill in the centre, socials / résumé
+ * on the right. Over the hero only the link pill has a surface; once the
+ * page scrolls the whole bar tightens into a single frosted pill with a
+ * violet-tinted shadow. Below lg the links collapse into a full-screen
+ * overlay.
  */
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -76,87 +84,118 @@ export function Nav() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 px-4 transition-[padding] duration-500 ease-out sm:px-6 ${
+        scrolled ? "pt-3" : "pt-4 sm:pt-5"
+      }`}
+    >
       <div
-        className={`transition-[background-color,border-color,backdrop-filter] duration-500 ${
+        className={`mx-auto flex items-center justify-between gap-4 rounded-full border transition-[max-width,padding,background-color,border-color,box-shadow] duration-500 ease-out ${
           scrolled
-            ? "border-b border-[var(--glass-border)] bg-[var(--nav-scrim)] backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent"
+            ? "max-w-5xl border-[var(--glass-border)] bg-[var(--nav-scrim-solid)] py-2 pl-2 pr-2 shadow-[var(--nav-shadow)] backdrop-blur-xl sm:pl-3 sm:pr-3"
+            : "max-w-6xl border-transparent bg-transparent py-0 pl-0 pr-0"
         }`}
       >
-        <nav
-          aria-label="Primary"
-          className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6"
+        {/* Brand */}
+        <a
+          href="#top"
+          aria-label={`${site.fullName}, back to top`}
+          className={`group flex shrink-0 items-center gap-3 rounded-full ${FOCUS}`}
         >
-          <a
-            href="#top"
-            aria-label={`${site.fullName}, back to top`}
-            className="group flex shrink-0 items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
-          >
-            <Image
-              src="/arslan-avatar.jpg"
-              alt=""
-              width={128}
-              height={128}
-              className="h-9 w-9 rounded-full object-cover ring-1 ring-[var(--glass-border)] transition-[box-shadow,transform] duration-300 group-hover:scale-[1.04] group-hover:ring-[var(--border-strong)]"
-            />
-            <span className="chrome-text font-display text-sm font-bold uppercase tracking-[0.32em]">
+          <Image
+            src="/arslan-avatar.jpg"
+            alt=""
+            width={128}
+            height={128}
+            className="h-10 w-10 rounded-full object-cover ring-2 ring-[var(--glass-border)] transition-[box-shadow,transform] duration-300 group-hover:scale-[1.04] group-hover:ring-[var(--accent-border)]"
+          />
+          <span className="flex flex-col">
+            <span className="font-display text-[0.9375rem] font-bold leading-tight tracking-tight text-[var(--fg)] transition-colors duration-300 group-hover:text-[var(--accent)]">
               {site.name}
             </span>
-          </a>
+            <span className="mt-0.5 text-[0.6875rem] font-medium leading-none text-[var(--fg-faint)]">
+              {site.role}
+            </span>
+          </span>
+        </a>
 
-          {/* Desktop links */}
-          <ul className="hidden items-center gap-7 lg:flex">
+        {/* Desktop links, a floating pill until the bar itself becomes one */}
+        <nav aria-label="Primary" className="hidden lg:block">
+          <ul
+            className={`flex items-center gap-1 rounded-full border transition-[background-color,border-color,box-shadow,padding] duration-500 ease-out ${
+              scrolled
+                ? "border-transparent bg-transparent px-0 py-0"
+                : "border-[var(--glass-border)] bg-[var(--nav-scrim)] px-2 py-1.5 shadow-[var(--nav-shadow)] backdrop-blur-xl"
+            }`}
+          >
             {LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="relative py-2 text-[0.8125rem] tracking-wide text-[var(--fg-muted)] transition-colors duration-300 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-[var(--fg)] after:transition-transform after:duration-300 after:ease-out hover:text-[var(--fg)] hover:after:scale-x-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                  className={`block rounded-full px-3.5 py-1.5 text-[0.8125rem] font-medium text-[var(--fg-muted)] transition-colors duration-300 hover:bg-[var(--accent-soft)] hover:text-[var(--fg)] ${FOCUS}`}
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
-
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-
-            <a
-              href={site.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass hidden h-10 items-center gap-2 rounded-full px-5 text-[0.8125rem] font-medium tracking-wide text-[var(--fg)] transition-colors duration-300 hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)] sm:inline-flex"
-            >
-              <ArrowUpRightIcon className="h-3.5 w-3.5" />
-              Resume
-            </a>
-
-            {/* Hamburger (below lg) */}
-            <button
-              type="button"
-              onClick={() => setOpen((value) => !value)}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              aria-label={open ? "Close menu" : "Open menu"}
-              className="relative z-50 -mr-3 flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:bg-[var(--glass-fill)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)] lg:hidden"
-            >
-              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-              <span aria-hidden className="relative block h-3 w-5">
-                <motion.span
-                  animate={open ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                  className="absolute left-0 top-0 block h-px w-5 bg-[var(--fg)]"
-                />
-                <motion.span
-                  animate={open ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                  className="absolute bottom-0 left-0 block h-px w-5 bg-[var(--fg)]"
-                />
-              </span>
-            </button>
-          </div>
         </nav>
+
+        {/* Right cluster */}
+        <div className="flex shrink-0 items-center gap-2">
+          <a
+            href={site.socials.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className={`hidden h-10 w-10 xl:inline-flex ${ICON_BUTTON}`}
+          >
+            <GitHubIcon className="h-4 w-4" />
+          </a>
+          <a
+            href={site.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className={`hidden h-10 w-10 xl:inline-flex ${ICON_BUTTON}`}
+          >
+            <LinkedInIcon className="h-4 w-4" />
+          </a>
+
+          <a
+            href={site.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`accent-button hidden h-10 items-center gap-2 rounded-full px-5 text-[0.8125rem] font-semibold tracking-wide transition-[box-shadow,transform] duration-300 hover:-translate-y-px hover:shadow-[var(--accent-shadow-hover)] sm:inline-flex ${FOCUS}`}
+          >
+            Resume
+            <ArrowUpRightIcon className="h-3.5 w-3.5" />
+          </a>
+
+          {/* Hamburger (below lg) */}
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className={`relative z-50 flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[var(--glass-fill)] lg:hidden ${FOCUS}`}
+          >
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            <span aria-hidden className="relative block h-3 w-5">
+              <motion.span
+                animate={open ? { rotate: 45, y: 5.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="absolute left-0 top-0 block h-px w-5 bg-[var(--fg)]"
+              />
+              <motion.span
+                animate={open ? { rotate: -45, y: -5.5 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="absolute bottom-0 left-0 block h-px w-5 bg-[var(--fg)]"
+              />
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Mobile overlay menu */}
@@ -164,7 +203,6 @@ export function Nav() {
         {open && (
           <motion.div
             id="mobile-menu"
-            data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.25 } }}
@@ -182,12 +220,12 @@ export function Nav() {
                   <a
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="group flex items-baseline gap-4 py-2.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                    className={`group flex items-baseline gap-4 py-2.5 ${FOCUS}`}
                   >
-                    <span className="font-mono text-xs tracking-[0.2em] text-[var(--fg-faint)]">
+                    <span className="font-mono text-xs tracking-[0.2em] text-[var(--accent)]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-display text-3xl font-semibold tracking-tight text-[var(--fg)] transition-colors duration-300 group-hover:text-[var(--fg-muted)] sm:text-4xl">
+                    <span className="font-display text-3xl font-semibold tracking-tight text-[var(--fg)] transition-colors duration-300 group-hover:text-[var(--accent)] sm:text-4xl">
                       {link.label}
                     </span>
                   </a>
@@ -210,17 +248,17 @@ export function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setOpen(false)}
-                  className="glass inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-medium text-[var(--fg)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--glass-fill-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                  className={`accent-button inline-flex h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold ${FOCUS}`}
                 >
-                  <ArrowUpRightIcon className="h-4 w-4" />
                   Resume
+                  <ArrowUpRightIcon className="h-4 w-4" />
                 </a>
                 <a
                   href={site.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                  className={`inline-flex h-11 w-11 ${ICON_BUTTON}`}
                 >
                   <GitHubIcon />
                 </a>
@@ -229,7 +267,7 @@ export function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="glass inline-flex h-11 w-11 items-center justify-center rounded-full text-[var(--fg-muted)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                  className={`inline-flex h-11 w-11 ${ICON_BUTTON}`}
                 >
                   <LinkedInIcon />
                 </a>
@@ -238,7 +276,7 @@ export function Nav() {
               <a
                 href={`mailto:${site.email}`}
                 onClick={() => setOpen(false)}
-                className="mt-6 inline-block text-sm text-[var(--fg-muted)] transition-colors hover:text-[var(--fg)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--focus-ring)]"
+                className={`mt-6 inline-block text-sm text-[var(--fg-muted)] transition-colors hover:text-[var(--accent)] ${FOCUS}`}
               >
                 {site.email}
               </a>
