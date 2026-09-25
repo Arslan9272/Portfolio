@@ -1,4 +1,5 @@
 import { ScrollProgress } from "@/components/fx/ScrollProgress";
+import { Intro } from "@/components/fx/Intro";
 import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
@@ -18,7 +19,7 @@ const jsonLd = {
   name: site.fullName,
   jobTitle: site.role,
   url: "https://arslantabish.com",
-  image: "https://arslantabish.com/arslan-portrait-cutout.png",
+  image: "https://arslantabish.com/arslan-portrait.webp",
   email: `mailto:${site.email}`,
   address: {
     "@type": "PostalAddress",
@@ -57,6 +58,7 @@ export default function Home() {
           __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
         }}
       />
+      <Intro />
       <ScrollProgress />
       <Nav />
       <main className="relative">

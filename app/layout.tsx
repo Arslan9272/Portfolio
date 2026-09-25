@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Sora, Inter, Alex_Brush } from "next/font/google";
 import { SmoothScroll } from "@/components/fx/SmoothScroll";
 import "./globals.css";
@@ -25,6 +26,10 @@ const DESCRIPTION =
   "Full stack software engineer in Lahore with 3 years of experience and 30+ projects shipped. Python, FastAPI, PostgreSQL, React and TypeScript, and the AI features inside them.";
 
 const SITE_URL = "https://arslantabish.com";
+
+// Runs before first paint: the intro plays once per session, so a repeat
+// visit is marked to skip it before the curtain can flash.
+const INTRO_SCRIPT = `try{if(sessionStorage.getItem("intro-seen"))document.documentElement.dataset.intro="skip"}catch(e){}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -55,8 +60,13 @@ export default function RootLayout({
       lang="en"
       className={`${sora.variable} ${inter.variable} ${alexBrush.variable}`}
       data-theme="dark"
+      data-intro="playing"
+      suppressHydrationWarning
     >
       <body className="min-h-screen antialiased">
+        <Script id="intro" strategy="beforeInteractive">
+          {INTRO_SCRIPT}
+        </Script>
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

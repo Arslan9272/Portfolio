@@ -308,6 +308,25 @@ body {
   mask-composite: intersect;
 }
 
+/* ---------- Intro curtain ---------- */
+
+/* Repeat visits in the same session skip the intro before first paint */
+html[data-intro="skip"] .intro {
+  display: none;
+}
+
+/* Failsafe: if JavaScript never runs, the curtain still lifts */
+.intro {
+  animation: intro-failsafe 0.6s ease 4s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
 /* ---------- Ambient motion ---------- */
 
 /* Hero dots: a slow, transform-only drift, so it stays on the compositor. */

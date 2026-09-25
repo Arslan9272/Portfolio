@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { site } from "@/content/site";
+import { useIntroDone } from "@/components/fx/Intro";
 import { IndexChip } from "@/components/fx/IndexChip";
 import {
   ArrowUpRightIcon,
@@ -74,6 +75,8 @@ const DOTS = (() => {
  * the ground some light.
  */
 export function Hero() {
+  // Entrance animations wait for the intro curtain to lift
+  const revealed = useIntroDone();
   return (
     <section
       id="top"
@@ -113,7 +116,7 @@ export function Hero() {
           <motion.div
             variants={container}
             initial="hidden"
-            animate="visible"
+            animate={revealed ? "visible" : "hidden"}
             className="mx-auto flex max-w-2xl flex-col items-start lg:col-span-7 lg:mx-0"
           >
             <motion.div variants={item}>
@@ -170,9 +173,10 @@ export function Hero() {
 
           {/* Portrait */}
           <motion.div
-            initial={{ opacity: 0, y: 28, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.35 }}
+            // Visible from the first paint; it only settles into place
+            initial={{ y: 28, scale: 0.97 }}
+            animate={revealed ? { y: 0, scale: 1 } : { y: 28, scale: 0.97 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
             className="flex items-center justify-center lg:col-span-5"
           >
             <div className="group relative mx-auto w-full max-w-[340px] sm:max-w-[400px]">
@@ -202,11 +206,12 @@ export function Hero() {
                   />
                   {/* Background-free cutout, so the lavender frame shows through */}
                   <Image
-                    src="/arslan-portrait-cutout.png"
+                    src="/arslan-portrait.webp"
                     alt={`Portrait of ${site.fullName}`}
                     fill
-                    loading="eager"
-                    fetchPriority="high"
+                    preload
+                    unoptimized
+                    data-hero-portrait
                     sizes="(min-width: 640px) 400px, 340px"
                     className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
