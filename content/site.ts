@@ -58,7 +58,7 @@ export type Testimonial = {
 export const site = {
   name: "Arslan Tabish",
   fullName: "Muhammad Arslan Tabish",
-  role: "Full Stack Software Engineer",
+  role: "Forward Deployed Engineer",
   tagline: "I build web products end to end, from the database to the browser.",
   taglineEmphasis: "from the database to the browser.", // trailing part of tagline set in the accent gradient
   availabilityBadge: "Available for projects & roles",
@@ -101,7 +101,7 @@ export const site = {
 
   location: "Lahore, Punjab, Pakistan",
   footerBlurb:
-    "Full stack software engineer with 4 years of professional experience. Python and FastAPI services, React and TypeScript interfaces, and the AI features inside them.",
+    "Forward deployed engineer with 4 years of professional experience. I work directly with clients to turn their problems into shipped features. Python and FastAPI services, React and TypeScript interfaces, and the AI features inside them.",
   intro:
     "Four years shipping production apps on Python, FastAPI, PostgreSQL, React and TypeScript, and increasingly the AI features inside them, for clients, my own products and Intagleo Systems.",
 
@@ -533,10 +533,11 @@ export const site = {
   experience: [
     {
       period: "Jul 2024 – Present",
-      role: "Software Engineer (Full Stack, Python)",
+      role: "Forward Deployed Engineer (Python, Django, AI/ML)",
       org: "Intagleo Systems",
       location: "Lahore",
       highlights: [
+        "Work directly with clients: join their calls, find out what is really slowing them down, turn it into clear features, then build, deploy and support those features in production myself.",
         "Build LLM-powered product features on the Anthropic Claude API: agentic workflows, RAG pipelines, MCP-connected tooling and prompt-engineered integrations. Structured outputs, schema validation and deterministic fallbacks mean the AI features fail safely in production.",
         "Ship secure, scalable REST APIs in Python and FastAPI across several production applications, covering authentication, Pydantic validation, background jobs and business logic, plus Django and DRF services with role-based permissions.",
         "Design and optimise data across PostgreSQL, MySQL and MongoDB, covering schema design, efficient queries, migrations and data integrity between systems.",
