@@ -40,7 +40,7 @@ export function Experience({ index = "03" }: { index?: string }) {
           label="Career"
           title="Where the"
           emphasis="work was done"
-          lede="Three years of professional software engineering, shipping full-stack products, APIs and LLM features for real users."
+          lede="Four years of professional software engineering, shipping full-stack products, APIs and LLM features for real users."
         />
 
         <div className="grid gap-20 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-16">

@@ -64,7 +64,7 @@ export const site = {
   availabilityBadge: "Available for projects & roles",
   // Quick-scan proof points under the hero CTAs
   heroProofs: [
-    "3 years professional experience",
+    "4 years professional experience",
     "30+ projects shipped",
     "10+ happy clients",
   ],
@@ -101,16 +101,16 @@ export const site = {
 
   location: "Lahore, Punjab, Pakistan",
   footerBlurb:
-    "Full stack software engineer with 3 years of professional experience. Python and FastAPI services, React and TypeScript interfaces, and the AI features inside them.",
+    "Full stack software engineer with 4 years of professional experience. Python and FastAPI services, React and TypeScript interfaces, and the AI features inside them.",
   intro:
-    "Three years shipping production apps on Python, FastAPI, PostgreSQL, React and TypeScript, and increasingly the AI features inside them, for clients, my own products and Intagleo Systems.",
+    "Four years shipping production apps on Python, FastAPI, PostgreSQL, React and TypeScript, and increasingly the AI features inside them, for clients, my own products and Intagleo Systems.",
 
   aboutHeadline: "Real products, built to last.",
   aboutHeadlineEmphasis: "built to last.", // trailing part of aboutHeadline set in the accent gradient
   aboutLede:
     "I build web applications end to end, the API, the data model and the interface, and more and more the LLM features inside them, and I keep them reliable once they are running in production.",
   aboutStory:
-    "Three years in, I have shipped client sites and full-stack features at Intagleo and Devsloop, built LLM features on the Claude API, and launched Cold Outreach Pipeline as a product of my own. I care most about the unglamorous parts, validation, retries, tests and cost, because that is what makes software, AI or not, survive contact with real users.",
+    "Four years in, I have shipped client sites and full-stack features at Intagleo and Devsloop, built LLM features on the Claude API, and launched Cold Outreach Pipeline as a product of my own. I care most about the unglamorous parts, validation, retries, tests and cost, because that is what makes software, AI or not, survive contact with real users.",
   // How I work: the value points, rather than a second list of skills.
   aboutHighlights: [
     "Production first: validation, retries and fallbacks built in from day one",

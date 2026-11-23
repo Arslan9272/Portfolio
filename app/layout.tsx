@@ -23,7 +23,7 @@ const alexBrush = Alex_Brush({
 
 const TITLE = "Muhammad Arslan Tabish | Full Stack Software Engineer";
 const DESCRIPTION =
-  "Full stack software engineer in Lahore with 3 years of experience and 30+ projects shipped. Python, FastAPI, PostgreSQL, React and TypeScript, and the AI features inside them.";
+  "Full stack software engineer in Lahore with 4 years of experience and 30+ projects shipped. Python, FastAPI, PostgreSQL, React and TypeScript, and the AI features inside them.";
 
 const SITE_URL = "https://arslantabish.com";
 
